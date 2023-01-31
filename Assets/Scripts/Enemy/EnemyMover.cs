@@ -1,7 +1,4 @@
-using System;
-using Interfaces;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Enemy
 {
