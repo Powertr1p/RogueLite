@@ -1,6 +1,7 @@
 using System;
 using Interfaces;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Enemy
 {
@@ -21,7 +22,7 @@ namespace Enemy
         private void Update()
         {
             if (!_isInitialized) return;
-            
+
             _transform.position =  Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
         }
 
