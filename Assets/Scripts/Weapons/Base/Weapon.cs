@@ -1,44 +1,37 @@
+using System;
+using Components;
 using UnityEngine;
 
 namespace Weapons.Base
 {
+    [RequireComponent(typeof(CooldownTimer))]
     public abstract class Weapon : MonoBehaviour
     {
         [Header("Prefab")] 
         [SerializeField] protected Projectile Projectile;
 
         [Header("Weapon parameters")]
-        [SerializeField] protected float Cooldown = 1f;
         [SerializeField] protected int Damage;
         [SerializeField] protected float ProjectileSpeed = 10f;
 
-        private float _timeUntilNextShot;
+        private CooldownTimer _cooldownTimer;
 
-        private void Start()
+        private void Awake()
         {
-            _timeUntilNextShot = Time.time + Cooldown;
+            _cooldownTimer = GetComponent<CooldownTimer>();
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            if (IsCooldownEnded())
-            {
-                Shoot();
-                SetupNewCooldownTimer();
-            }
+            _cooldownTimer.CooldownExpired += Shoot;
+        }
+
+        private void OnDisable()
+        {
+            _cooldownTimer.CooldownExpired -= Shoot;
         }
 
         protected abstract void Shoot();
         protected abstract void InitializeProjectile(Projectile instance);
-
-        private bool IsCooldownEnded()
-        {
-            return Time.time >= _timeUntilNextShot;
-        }
-
-        private void SetupNewCooldownTimer()
-        {
-            _timeUntilNextShot = Time.time + Cooldown;
-        }
     }
 }

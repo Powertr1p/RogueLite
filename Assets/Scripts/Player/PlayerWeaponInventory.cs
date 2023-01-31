@@ -13,11 +13,6 @@ namespace Player
         [SerializeField] private Transform _weaponHolder;
         [SerializeField] private Weapon _testWeapon;
 
-        private void Update()
-        {
-            
-        }
-
         public void AddWeapon(Weapon weapon)
         {
             if (_currentWeapons.Count >= _weaponLimit) return;
