@@ -4848,8 +4848,8 @@ MonoBehaviour:
   _player: {fileID: 1562486509}
   _camera: {fileID: 519420031}
   _enemyPrefab: {fileID: 869054394900747885, guid: ff9bb9290fa284339825a0a5447df721, type: 3}
-  _enemyLimit: 10
-  _cooldown: 10
+  _enemyLimit: 5
+  _cooldown: 4
   _radius: 10
   _spawnAmount: 10
   _minSpawnDistance: 1.1
