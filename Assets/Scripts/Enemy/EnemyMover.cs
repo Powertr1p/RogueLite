@@ -24,7 +24,7 @@ namespace Enemy
             float yOffset = Random.Range(-_randomnessOffset, _randomnessOffset);
             Vector3 targetPosition = _target.position + new Vector3(xOffset, yOffset, 0);
             
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+            _transform.position = Vector3.MoveTowards(_transform.position, targetPosition, _speed * Time.deltaTime);
         }
 
         public void Initialize(Transform target)
