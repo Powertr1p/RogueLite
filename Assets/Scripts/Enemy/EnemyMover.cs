@@ -6,6 +6,7 @@ namespace Enemy
     {
         [SerializeField] private float _speed = 2f;
         [SerializeField] private float _randomnessOffset = 5f;
+       
         private Transform _target;
         private Transform _transform;
 
