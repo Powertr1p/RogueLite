@@ -5,7 +5,7 @@ namespace Enemy
     public class EnemyMover : MonoBehaviour
     {
         [SerializeField] private float _speed = 2f;
-        
+        [SerializeField] private float _randomnessOffset = 5f;
         private Transform _target;
         private Transform _transform;
 
@@ -19,8 +19,12 @@ namespace Enemy
         private void Update()
         {
             if (!_isInitialized) return;
-
-            _transform.position =  Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime);
+            
+            float xOffset = Random.Range(-_randomnessOffset, _randomnessOffset);
+            float yOffset = Random.Range(-_randomnessOffset, _randomnessOffset);
+            Vector3 targetPosition = _target.position + new Vector3(xOffset, yOffset, 0);
+            
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
         }
 
         public void Initialize(Transform target)
