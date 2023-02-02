@@ -5195,17 +5195,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1814787309}
     m_Modifications:
+    - target: {fileID: 331090269639136256, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
+      propertyPath: _cooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_Name
       value: AutoTargetWeapon
       objectReference: {fileID: 0}
     - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: Damage
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: Cooldown
