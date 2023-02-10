@@ -11,6 +11,7 @@ namespace Enemy
         [SerializeField] private EnemyMover _mover;
         [SerializeField] private Health _health;
         [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private GameObject _crystal;
 
         private Tween _tweenColor;
 
@@ -29,6 +30,7 @@ namespace Enemy
         private void OnDied()
         {
             _tweenColor.Kill();
+            Instantiate(_crystal, transform.position, transform.rotation);
             Destroy(gameObject);
         }
 
