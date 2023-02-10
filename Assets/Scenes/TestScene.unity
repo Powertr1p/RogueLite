@@ -4694,7 +4694,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.42
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4848,8 +4848,8 @@ MonoBehaviour:
   _player: {fileID: 1562486509}
   _camera: {fileID: 519420031}
   _enemyPrefab: {fileID: 869054394900747885, guid: ff9bb9290fa284339825a0a5447df721, type: 3}
-  _enemyLimit: 5
-  _cooldown: 4
+  _enemyLimit: 120
+  _cooldown: 10
   _radius: 10
   _spawnAmount: 10
   _minSpawnDistance: 1.1
@@ -5195,6 +5195,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1814787309}
     m_Modifications:
+    - target: {fileID: 331090269639136256, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
+      propertyPath: _cooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_Name
       value: AutoTargetWeapon
@@ -5205,7 +5209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: Damage
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: Cooldown

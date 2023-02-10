@@ -62,7 +62,7 @@ namespace Enemy
 
         private void Spawn()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < _spawnAmount; i++)
             {
                 Vector2 spawnPosition = GenerateSpawnPosition();
                 
