@@ -1,5 +1,7 @@
+using System;
 using Components;
 using DG.Tweening;
+using Loot;
 using UnityEngine;
 
 namespace Enemy
@@ -11,8 +13,11 @@ namespace Enemy
         [SerializeField] private EnemyMover _mover;
         [SerializeField] private Health _health;
         [SerializeField] private SpriteRenderer _sprite;
-        [SerializeField] private GameObject _crystal;
+        [SerializeField] private EnemyType _type;
 
+        public new EnemyType GetType => _type;
+        
+        private Transform _lootTransform;
         private Tween _tweenColor;
 
         private void OnEnable()
@@ -30,13 +35,26 @@ namespace Enemy
         private void OnDied()
         {
             _tweenColor.Kill();
-            Instantiate(_crystal, transform.position, transform.rotation);
+            
+            _lootTransform.SetParent(null);
+            _lootTransform.gameObject.SetActive(true);
+            
             Destroy(gameObject);
         }
 
-        public void Initialize(Transform player)
+        public void Initialize(Transform player, LootBase loot)
         {
             _mover.Initialize(player);
+            _lootTransform = loot.transform;
+            
+            BindLoot(loot);
+        }
+
+        private void BindLoot(LootBase loot)
+        {
+            _lootTransform.SetParent(transform);
+            _lootTransform.localPosition = Vector3.zero;
+            _lootTransform.gameObject.SetActive(false);
         }
 
         private void OnTakeDamage()
