@@ -7,6 +7,7 @@ namespace Player
     public class Pickup : MonoBehaviour
     {
         [Tooltip("Радиус, в котором игрок может поднимать предметы")]
+        [Range(0f, 100f)]
         [SerializeField] private float _radius;
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
@@ -56,7 +57,7 @@ namespace Player
             for (int i = 0; i < _detectedLoot.Count; i++)
             {
                 Vector2 direction = (transform.position - _detectedLoot[i].transform.position).normalized;
-                _detectedLoot[i].transform.position += (Vector3) (direction * (10f * Time.deltaTime));
+                _detectedLoot[i].transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
 
                 if (Vector3.Distance(transform.position, _detectedLoot[i].transform.position) < 0.1f)
                 {

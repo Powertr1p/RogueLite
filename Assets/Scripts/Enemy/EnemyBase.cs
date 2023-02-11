@@ -1,3 +1,4 @@
+using System;
 using Components;
 using DG.Tweening;
 using Loot;
@@ -13,8 +14,15 @@ namespace Enemy
         [SerializeField] private Health _health;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private EnemyType _type;
+        
+        [Header("Лут")]
+        [SerializeField] private LootType _loot;
+        [SerializeField] private int _chanceToDrop;
 
+        public event Action<EnemyBase> Died;
+        
         public new EnemyType GetType => _type;
+        public LootType GetLootType => _loot;
         
         private Transform _lootTransform;
         private Tween _tweenColor;
@@ -37,6 +45,8 @@ namespace Enemy
             
             _lootTransform.SetParent(null);
             _lootTransform.gameObject.SetActive(true);
+            
+            Died?.Invoke(this);
             
             Destroy(gameObject);
         }

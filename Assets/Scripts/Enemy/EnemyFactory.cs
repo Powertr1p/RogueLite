@@ -13,14 +13,14 @@ namespace Enemy
         public EnemyBase GetEnemy(EnemyType type, Transform player)
         {
             var instance = Instantiate(_enemyPrefabs.FirstOrDefault(x => x.GetType == type));
-            instance.Initialize(player, GetLoot());
+            instance.Initialize(player, GetLoot(instance.GetLootType));
 
             return instance;
         }
 
-        private LootBase GetLoot()
+        private LootBase GetLoot(LootType type)
         {
-            var instance = _lootFactory.GetLoot(LootType.ExpCrystal);
+            var instance = _lootFactory.GetLoot(type);
             return instance;
         }
     }

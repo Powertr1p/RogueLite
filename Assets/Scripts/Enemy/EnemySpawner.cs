@@ -35,7 +35,7 @@ namespace Enemy
         [Tooltip("Если включить эту опцию, то следующая волна будет круговой. После кругового спавна, опция автоматически выключится")]
         [SerializeField] private bool _isRound;
 
-        private List<EnemyBase> _activeEnemies = new List<EnemyBase>();
+        [SerializeField] private List<EnemyBase> _activeEnemies = new List<EnemyBase>();
         
         private float _timeUntilNextSpawn;
 
@@ -76,13 +76,15 @@ namespace Enemy
 
                 var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
                 instance.transform.position = _player.transform.position + new Vector3(x, y, 0);
+               
+                CountEnemy(instance);
 
                 angle += nextAngle;
             }
 
             _isRound = false;
         }
-
+        
         private void OutsideCameraSpawn()
         {
             int spawnAmount = CalculateSpawnAmount();
@@ -93,10 +95,16 @@ namespace Enemy
                 var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
                 instance.transform.position = spawnPosition;
 
-                _activeEnemies.Add(instance);
+                CountEnemy(instance);
             }
         }
-
+        
+        private void CountEnemy(EnemyBase instance)
+        {
+            _activeEnemies.Add(instance);
+            instance.Died += StopCountEnemy;
+        }
+        
         private int CalculateSpawnAmount()
         {
             var amountRemains = _enemyLimit - _activeEnemies.Count;
@@ -120,7 +128,7 @@ namespace Enemy
 
         private Vector3 GetRandomPositionOutsideCamera()
         {
-            return _camera.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 2f), Random.Range(1.1f, 2f), _camera.nearClipPlane));
+            return _camera.ViewportToWorldPoint(new Vector3(Random.Range(_minSpawnDistance, _maxSpawnDistance), Random.Range(_minSpawnDistance, _maxSpawnDistance), _camera.nearClipPlane));
         }
 
         private Vector2 PositionWithRandomOffset(Vector2 position)
@@ -147,6 +155,7 @@ namespace Enemy
         private bool IsInCameraView(Vector3 position)
         {
             Vector3 viewPos = _camera.WorldToViewportPoint(position);
+            
             return (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0);
         }
 
@@ -158,6 +167,13 @@ namespace Enemy
         private void SetupNewCooldownTimer()
         {
             _timeUntilNextSpawn = Time.time + _cooldown;
+        }
+
+        private void StopCountEnemy(EnemyBase enemy)
+        {
+            enemy.Died -= StopCountEnemy;
+            
+            _activeEnemies.Remove(enemy);
         }
     }
 }
