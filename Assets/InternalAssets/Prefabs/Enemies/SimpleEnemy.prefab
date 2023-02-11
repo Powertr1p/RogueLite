@@ -181,7 +181,7 @@ MonoBehaviour:
   _sprite: {fileID: 238566025671807697}
   _type: 0
   _loot: 0
-  _dropChance: 80
+  _dropChance: 0
 --- !u!114 &3550937724801663762
 MonoBehaviour:
   m_ObjectHideFlags: 0

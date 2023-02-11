@@ -14,7 +14,7 @@ namespace Enemy
         {
             var instance = Instantiate(_enemyPrefabs.FirstOrDefault(x => x.GetType == type));
             
-            if (Random.Range(0, 100f) <= instance.DropChance)
+            if (Random.Range(1f, 100f) <= instance.DropChance)
                 instance.Initialize(player, GetLoot(instance.GetLootType));
             else
                 instance.Initialize(player);
