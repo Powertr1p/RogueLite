@@ -13,7 +13,11 @@ namespace Enemy
         public EnemyBase GetEnemy(EnemyType type, Transform player)
         {
             var instance = Instantiate(_enemyPrefabs.FirstOrDefault(x => x.GetType == type));
-            instance.Initialize(player, GetLoot(instance.GetLootType));
+            
+            if (Random.Range(0, 100f) <= instance.DropChance)
+                instance.Initialize(player, GetLoot(instance.GetLootType));
+            else
+                instance.Initialize(player);
 
             return instance;
         }

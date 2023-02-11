@@ -1,6 +1,7 @@
 using System;
 using Components;
 using DG.Tweening;
+using JetBrains.Annotations;
 using Loot;
 using UnityEngine;
 
@@ -17,12 +18,13 @@ namespace Enemy
         
         [Header("Лут")]
         [SerializeField] private LootType _loot;
-        [SerializeField] private int _chanceToDrop;
+        [SerializeField] private int _dropChance;
 
         public event Action<EnemyBase> Died;
         
         public new EnemyType GetType => _type;
         public LootType GetLootType => _loot;
+        public int DropChance => _dropChance;
         
         private Transform _lootTransform;
         private Tween _tweenColor;
@@ -42,11 +44,14 @@ namespace Enemy
         private void OnDied()
         {
             _tweenColor.Kill();
-            
-            _lootTransform.SetParent(null);
-            _lootTransform.gameObject.SetActive(true);
-            
+
             Died?.Invoke(this);
+
+            if (!ReferenceEquals(_lootTransform, null))
+            {
+                _lootTransform.SetParent(null);
+                _lootTransform.gameObject.SetActive(true);
+            }
             
             Destroy(gameObject);
         }
@@ -57,6 +62,11 @@ namespace Enemy
             _lootTransform = loot.transform;
             
             BindLoot(loot);
+        }
+
+        public void Initialize(Transform player)
+        {
+            _mover.Initialize(player);
         }
 
         private void BindLoot(LootBase loot)
