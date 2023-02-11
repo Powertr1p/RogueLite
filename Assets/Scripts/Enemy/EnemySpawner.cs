@@ -7,11 +7,6 @@ namespace Enemy
 {
     public class EnemySpawner : MonoBehaviour
     {
-        //TODO: переделать в фабричный метод
-        //TODO: фабрика будет собирать врага, и накидывать ему сразу дроп
-        //TODO: нужные системы будут подписываться на события врага
-        //TODO: спавнер должен обращаться к фабрике и запрашивать врага
-        
         [SerializeField] private Transform _player;
         [SerializeField] private UnityEngine.Camera _camera;
         [SerializeField] private EnemyFactory _factory;
@@ -36,6 +31,10 @@ namespace Enemy
         [Tooltip("Максимальное расстояние спавна врагов от камеры")]
         [SerializeField] private float _maxSpawnDistance = 2f;
 
+        [Header("Переключатель спавнеров")]
+        [Tooltip("Если включить эту опцию, то следующая волна будет круговой. После кругового спавна, опция автоматически выключится")]
+        [SerializeField] private bool _isRound;
+
         public event Action<EnemyBase> EnemySpawned;
         
         private List<EnemyBase> _activeEnemies = new List<EnemyBase>();
@@ -54,7 +53,11 @@ namespace Enemy
         {
             if (IsCooldownEnded())
             {
-                Spawn();
+                if (_isRound)
+                    RoundSpawn();
+                else
+                    Spawn();
+                
                 SetupNewCooldownTimer();
             }
         }
@@ -74,6 +77,8 @@ namespace Enemy
 
                 angle += nextAngle;
             }
+
+            _isRound = false;
         }
 
         private void Spawn()
