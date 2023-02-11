@@ -1,4 +1,3 @@
-using System;
 using Components;
 using DG.Tweening;
 using Loot;

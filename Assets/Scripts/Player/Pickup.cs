@@ -60,7 +60,6 @@ namespace Player
 
                 if (Vector3.Distance(transform.position, _detectedLoot[i].transform.position) < 0.1f)
                 {
-                    Debug.Log("Consumed!");
                     _detectedLoot[i].Consume();
                     _detectedLoot.Remove(_detectedLoot[i]);
                 }

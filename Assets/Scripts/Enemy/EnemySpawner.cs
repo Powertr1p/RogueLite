@@ -35,8 +35,6 @@ namespace Enemy
         [Tooltip("Если включить эту опцию, то следующая волна будет круговой. После кругового спавна, опция автоматически выключится")]
         [SerializeField] private bool _isRound;
 
-        public event Action<EnemyBase> EnemySpawned;
-        
         private List<EnemyBase> _activeEnemies = new List<EnemyBase>();
         
         private float _timeUntilNextSpawn;
@@ -53,13 +51,17 @@ namespace Enemy
         {
             if (IsCooldownEnded())
             {
-                if (_isRound)
-                    RoundSpawn();
-                else
-                    Spawn();
-                
+                SpawnEnemies();
                 SetupNewCooldownTimer();
             }
+        }
+
+        private void SpawnEnemies()
+        {
+            if (_isRound)
+                RoundSpawn();
+            else
+                OutsideCameraSpawn();
         }
 
         private void RoundSpawn()
@@ -81,17 +83,25 @@ namespace Enemy
             _isRound = false;
         }
 
-        private void Spawn()
+        private void OutsideCameraSpawn()
         {
-            var amountRemains = _enemyLimit - _activeEnemies.Count;
-            var spawnAmount = amountRemains - _spawnRate >= 0 ? _spawnRate : amountRemains;
+            int spawnAmount = CalculateSpawnAmount();
             
             for (int i = 0; i < spawnAmount; i++)
             {
                 Vector2 spawnPosition = GenerateSpawnPosition();
                 var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
                 instance.transform.position = spawnPosition;
+
+                _activeEnemies.Add(instance);
             }
+        }
+
+        private int CalculateSpawnAmount()
+        {
+            var amountRemains = _enemyLimit - _activeEnemies.Count;
+            
+            return amountRemains - _spawnRate >= 0 ? _spawnRate : amountRemains;
         }
 
         private Vector2 GenerateSpawnPosition()
