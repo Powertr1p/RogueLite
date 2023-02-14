@@ -179,7 +179,9 @@ MonoBehaviour:
   _mover: {fileID: 3550937724801663762}
   _health: {fileID: 6862810722450623435}
   _sprite: {fileID: 238566025671807697}
-  _crystal: {fileID: 1826195750607740246, guid: fd07d2d97bc9b5545abcaf7834f99900, type: 3}
+  _type: 0
+  _loot: 0
+  _dropChance: 0
 --- !u!114 &3550937724801663762
 MonoBehaviour:
   m_ObjectHideFlags: 0

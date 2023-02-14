@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,22 +9,34 @@ namespace Enemy
     {
         [SerializeField] private Transform _player;
         [SerializeField] private UnityEngine.Camera _camera;
-        [SerializeField] private EnemyBase _enemyPrefab;
+        [SerializeField] private EnemyFactory _factory;
         
-        [Header("Spawn Parameters")]
+        [Header("Параметры спавна врагов")]
+        [Tooltip("Максимальный лимит врагов. Общее количество врагов не будет превышать это число.")]
         [SerializeField] private int _enemyLimit = 10;
+        [Tooltip("Промежуток времени, через который будут спавнится враги")]
         [SerializeField] private float _cooldown = 1f;
+        [Tooltip("Количество врагов, которое будет спавнится в каждой волне")]
+        [SerializeField] private int _spawnRate = 50;
         
         [Header("Round Spawner Parameters")]
+        [Tooltip("Радиус спавна врагов по кругу. Чем больше радиус, тем больше круг")]
         [SerializeField] private float _radius = 10f;
-        [SerializeField] private int _spawnAmount = 50;
 
         [Header("Regular Spawner")] 
         [RangeAttribute(1.1f, 2f)]
+        [Tooltip("Минимальное расстояние спавна врагов от камеры. 1 - это уже внутри камеры")]
         [SerializeField] private float _minSpawnDistance = 1.1f;
         [RangeAttribute(1.5f, 3f)]
+        [Tooltip("Максимальное расстояние спавна врагов от камеры")]
         [SerializeField] private float _maxSpawnDistance = 2f;
 
+        [Header("Переключатель спавнеров")]
+        [Tooltip("Если включить эту опцию, то следующая волна будет круговой. После кругового спавна, опция автоматически выключится")]
+        [SerializeField] private bool _isRound;
+
+        [SerializeField] private List<EnemyBase> _activeEnemies = new List<EnemyBase>();
+        
         private float _timeUntilNextSpawn;
 
         private const float MinPosition = -1f;
@@ -38,37 +51,65 @@ namespace Enemy
         {
             if (IsCooldownEnded())
             {
-                Spawn();
+                SpawnEnemies();
                 SetupNewCooldownTimer();
             }
         }
 
+        private void SpawnEnemies()
+        {
+            if (_isRound)
+                RoundSpawn();
+            else
+                OutsideCameraSpawn();
+        }
+
         private void RoundSpawn()
         {
-            float nextAngle = 2 * MathF.PI / _spawnAmount;
+            float nextAngle = 2 * MathF.PI / _spawnRate;
             float angle = 0;
 
-            for (int i = 0; i < _spawnAmount; i++)
+            for (int i = 0; i < _spawnRate; i++)
             {
                 float x = Mathf.Cos(angle) * _radius;
                 float y = Mathf.Sin(angle) * _radius;
 
-                var instance = Instantiate(_enemyPrefab, _player.transform.position + new Vector3(x, y, 0), Quaternion.identity);
-                instance.Initialize(_player);
-                
+                var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
+                instance.transform.position = _player.transform.position + new Vector3(x, y, 0);
+               
+                CountEnemy(instance);
+
                 angle += nextAngle;
             }
-        }
 
-        private void Spawn()
+            _isRound = false;
+        }
+        
+        private void OutsideCameraSpawn()
         {
-            for (int i = 0; i < _spawnAmount; i++)
+            int spawnAmount = CalculateSpawnAmount();
+            
+            for (int i = 0; i < spawnAmount; i++)
             {
                 Vector2 spawnPosition = GenerateSpawnPosition();
-                
-                var instance = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
-                instance.Initialize(_player);
+                var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
+                instance.transform.position = spawnPosition;
+
+                CountEnemy(instance);
             }
+        }
+        
+        private void CountEnemy(EnemyBase instance)
+        {
+            _activeEnemies.Add(instance);
+            instance.Died += StopCountEnemy;
+        }
+        
+        private int CalculateSpawnAmount()
+        {
+            var amountRemains = _enemyLimit - _activeEnemies.Count;
+            
+            return amountRemains - _spawnRate >= 0 ? _spawnRate : amountRemains;
         }
 
         private Vector2 GenerateSpawnPosition()
@@ -87,7 +128,7 @@ namespace Enemy
 
         private Vector3 GetRandomPositionOutsideCamera()
         {
-            return _camera.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 2f), Random.Range(1.1f, 2f), _camera.nearClipPlane));
+            return _camera.ViewportToWorldPoint(new Vector3(Random.Range(_minSpawnDistance, _maxSpawnDistance), Random.Range(_minSpawnDistance, _maxSpawnDistance), _camera.nearClipPlane));
         }
 
         private Vector2 PositionWithRandomOffset(Vector2 position)
@@ -114,6 +155,7 @@ namespace Enemy
         private bool IsInCameraView(Vector3 position)
         {
             Vector3 viewPos = _camera.WorldToViewportPoint(position);
+            
             return (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0);
         }
 
@@ -125,6 +167,13 @@ namespace Enemy
         private void SetupNewCooldownTimer()
         {
             _timeUntilNextSpawn = Time.time + _cooldown;
+        }
+
+        private void StopCountEnemy(EnemyBase enemy)
+        {
+            enemy.Died -= StopCountEnemy;
+            
+            _activeEnemies.Remove(enemy);
         }
     }
 }

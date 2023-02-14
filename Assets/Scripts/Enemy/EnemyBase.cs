@@ -1,5 +1,8 @@
+using System;
 using Components;
 using DG.Tweening;
+using JetBrains.Annotations;
+using Loot;
 using UnityEngine;
 
 namespace Enemy
@@ -11,8 +14,19 @@ namespace Enemy
         [SerializeField] private EnemyMover _mover;
         [SerializeField] private Health _health;
         [SerializeField] private SpriteRenderer _sprite;
-        [SerializeField] private GameObject _crystal;
+        [SerializeField] private EnemyType _type;
+        
+        [Header("Лут")]
+        [SerializeField] private LootType _loot;
+        [SerializeField] private int _dropChance;
 
+        public event Action<EnemyBase> Died;
+        
+        public new EnemyType GetType => _type;
+        public LootType GetLootType => _loot;
+        public int DropChance => _dropChance;
+        
+        private Transform _lootTransform;
         private Tween _tweenColor;
 
         private void OnEnable()
@@ -30,13 +44,36 @@ namespace Enemy
         private void OnDied()
         {
             _tweenColor.Kill();
-            Instantiate(_crystal, transform.position, transform.rotation);
+
+            Died?.Invoke(this);
+
+            if (!ReferenceEquals(_lootTransform, null))
+            {
+                _lootTransform.SetParent(null);
+                _lootTransform.gameObject.SetActive(true);
+            }
+            
             Destroy(gameObject);
+        }
+
+        public void Initialize(Transform player, LootBase loot)
+        {
+            _mover.Initialize(player);
+            _lootTransform = loot.transform;
+            
+            BindLoot(loot);
         }
 
         public void Initialize(Transform player)
         {
             _mover.Initialize(player);
+        }
+
+        private void BindLoot(LootBase loot)
+        {
+            _lootTransform.SetParent(transform);
+            _lootTransform.localPosition = Vector3.zero;
+            _lootTransform.gameObject.SetActive(false);
         }
 
         private void OnTakeDamage()
