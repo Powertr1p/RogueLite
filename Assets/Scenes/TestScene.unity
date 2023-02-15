@@ -4854,7 +4854,7 @@ MonoBehaviour:
   _radius: 10
   _minSpawnDistance: 1.1
   _maxSpawnDistance: 2
-  _isRound: 1
+  _isRound: 0
   _activeEnemies: []
 --- !u!1 &790972910
 GameObject:
@@ -5188,8 +5188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520a6d45247e49f38177477b15105d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 2
-  _pickupSpeed: 15
+  _radius: 2.3
+  _pickupSpeed: 25
   _lootLayer:
     serializedVersion: 2
     m_Bits: 512
