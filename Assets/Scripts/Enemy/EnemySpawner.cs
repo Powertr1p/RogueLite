@@ -52,7 +52,7 @@ namespace Enemy
             if (IsCooldownEnded())
             {
                 SpawnEnemies();
-                SetupNewCooldownTimer();
+                SetupNewCooldownTimer(); 
             }
         }
 
