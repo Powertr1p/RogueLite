@@ -1,8 +1,6 @@
-using System;
-using Components;
 using UnityEngine;
 
-namespace Weapons.Base
+namespace PowerTrip
 {
     [RequireComponent(typeof(CooldownTimer))]
     public abstract class Weapon : MonoBehaviour
@@ -23,12 +21,12 @@ namespace Weapons.Base
 
         private void OnEnable()
         {
-            _cooldownTimer.CooldownExpired += Shoot;
+            _cooldownTimer.OnCooldownExpired += Shoot;
         }
 
         private void OnDisable()
         {
-            _cooldownTimer.CooldownExpired -= Shoot;
+            _cooldownTimer.OnCooldownExpired -= Shoot;
         }
 
         protected abstract void Shoot();

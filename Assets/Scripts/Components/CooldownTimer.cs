@@ -1,38 +1,43 @@
 using System;
 using UnityEngine;
 
-namespace Components
+namespace PowerTrip
 {
     public class CooldownTimer : MonoBehaviour
     {
+        #region Events
+        public event Action OnCooldownExpired;
+        #endregion
+
+        #region Fields
         [SerializeField] private float _cooldown = 1f;
 
-        public event Action CooldownExpired;
-        
-        private float _cooldownExpireTime;
+        private float _cooldownExpirationTimestamp = 0f;
+        #endregion
 
         private void Start()
         {
-            _cooldownExpireTime = Time.time + _cooldown;
+            _cooldownExpirationTimestamp = Time.time + _cooldown;
         }
         
         private void Update()
         {
-            if (IsCooldownEnded())
+            if (IsCooldownEnded() is true)
             {
-                CooldownExpired?.Invoke();
+                OnCooldownExpired?.Invoke();
+
                 SetupNewCooldownTimer();
             }
         }
         
         private bool IsCooldownEnded()
         {
-            return Time.time >= _cooldownExpireTime;
+            return Time.time >= _cooldownExpirationTimestamp;
         }
 
         private void SetupNewCooldownTimer()
         {
-            _cooldownExpireTime = Time.time + _cooldown;
+            _cooldownExpirationTimestamp = Time.time + _cooldown;
         }
     }
 }

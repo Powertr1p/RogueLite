@@ -1,17 +1,32 @@
-using Interfaces;
 using UnityEngine;
 
-namespace Weapons
+namespace PowerTrip
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, IDamaging
     {
-        private float _speed;
         private Vector3 _direction;
+        private float _speed;
         private float _damage;
+
         private int _maxNumberOfCollisions = 1;
         private int _currentNumberOfCollisions;
 
         private bool _isInitialized;
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.gameObject.TryGetComponent(out IDamageable damageable))
+            {
+                DealDamage(damageable, _damage);
+            }
+        }
+
+        private void OnBecameInvisible()
+        {
+            // TODO: use pooling
+
+            Destroy(gameObject);
+        }
 
         private void Update()
         {
@@ -25,27 +40,24 @@ namespace Weapons
             _direction = direction;
             _speed = speed;
             _damage = damage;
+
             _isInitialized = true;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void DealDamage(IDamageable damageable, float amout)
         {
-            if (other.gameObject.TryGetComponent(out IDamagable damagable))
-            {
-                if (_currentNumberOfCollisions >= _maxNumberOfCollisions) return;
-                
-                _currentNumberOfCollisions++;
-                
-                damagable.GetDamage(_damage);
-                
-                if (_currentNumberOfCollisions >= _maxNumberOfCollisions)
-                    Destroy(gameObject);
-            }
-        }
+            if (_currentNumberOfCollisions >= _maxNumberOfCollisions) return;
 
-        private void OnBecameInvisible()
-        {
-           Destroy(gameObject);
+            _currentNumberOfCollisions++;
+
+            damageable.GetDamage(_damage);
+
+            if (_currentNumberOfCollisions >= _maxNumberOfCollisions)
+            {
+                // TODO: use pooling
+
+                Destroy(gameObject);
+            }
         }
     }
 }

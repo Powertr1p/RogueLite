@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Weapons;
-using Weapons.Base;
 
-namespace Player
+namespace PowerTrip
 {
     public class PlayerWeaponInventory : MonoBehaviour
     {

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Loot;
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
     public class Pickup : MonoBehaviour
     {
@@ -19,17 +18,32 @@ namespace Player
 
         private const float DelayBetweenChecks = 1f;
         
-        private Transform _transform;
+        private Transform _t;
         private float _timeSinceLastUpdate;
         private List<LootBase> _detectedLoot = new List<LootBase>();
 
-        private void Awake()
+        private bool _isEnabled = false;
+
+        private void OnDrawGizmos()
         {
-            _transform = transform;
+            Gizmos.color = _radiusColor;
+            Gizmos.DrawWireSphere(transform.position, _radius);
         }
 
-        private void Update()
+        private void Awake()
         {
+            _t = transform;
+        }
+
+        public void SetState(bool state)
+        {
+            _isEnabled = state;
+        }
+
+        public void UpdatePickup()
+        {
+            if (_isEnabled is false) return;
+
             DetectLoot();
 
             MoveDetectedLootTowardsPlayer();
@@ -38,7 +52,8 @@ namespace Player
         private void DetectLoot()
         {
             Collider2D[] results = new Collider2D[10];
-            var hit = Physics2D.OverlapCircleNonAlloc(_transform.position, _radius, results, _lootLayer);
+
+            var hit = Physics2D.OverlapCircleNonAlloc(_t.position, _radius, results, _lootLayer);
 
             for (int i = 0; i < hit; i++)
             {
@@ -55,18 +70,19 @@ namespace Player
         {
             for (int i = 0; i < _detectedLoot.Count; i++)
             {
-                Vector2 direction = (transform.position - _detectedLoot[i].transform.position).normalized;
+                Vector2 direction = (_t.position - _detectedLoot[i].transform.position).normalized;
+
                 _detectedLoot[i].transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
 
-                if (Vector3.Distance(transform.position, _detectedLoot[i].transform.position) < 0.1f)
+                if (Vector3.Distance(_t.position, _detectedLoot[i].transform.position) < 0.1f)
                 {
                     _detectedLoot[i].Consume();
+
                     _detectedLoot.Remove(_detectedLoot[i]);
                 }
             }
         }
 
-        
         //TODO: enable if lags
         private bool CanCheck()
         {
@@ -77,12 +93,6 @@ namespace Player
             _timeSinceLastUpdate = 0f;
 
             return true;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = _radiusColor;
-            Gizmos.DrawWireSphere(transform.position, _radius);
         }
     }
 }

@@ -1,72 +1,72 @@
 using System;
-using Components;
-using DG.Tweening;
-using JetBrains.Annotations;
-using Loot;
 using UnityEngine;
 
-namespace Enemy
+using DG.Tweening;
+using JetBrains.Annotations;
+
+namespace PowerTrip
 {
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(EnemyMover))]
+
     public class EnemyBase : MonoBehaviour
     {
-        [SerializeField] private EnemyMover _mover;
-        [SerializeField] private Health _health;
-        [SerializeField] private SpriteRenderer _sprite;
-        [SerializeField] private EnemyType _type;
-        
-        [Header("Лут")]
-        [SerializeField] private LootType _loot;
-        [SerializeField] private int _dropChance;
+        #region Events
+        public event Action<EnemyBase> OnDeath;
+        #endregion
 
-        public event Action<EnemyBase> Died;
-        
-        public new EnemyType GetType => _type;
-        public LootType GetLootType => _loot;
-        public int DropChance => _dropChance;
-        
+        #region Fields
+        [SerializeField] protected EnemyType _type;
+
+        [SerializeField] protected Health _health;
+        [SerializeField] protected EnemyDamager _damager;
+        [SerializeField] protected EnemyMover _mover;
+        [SerializeField] protected SpriteRenderer _sprite;
+
+        [Header("Лут")]
+        [SerializeField] protected LootType _loot;
+        [SerializeField] protected int _dropChance;
+
+        [Header("Урон")]
+        [SerializeField] protected float _damage = 1f;
+
         private Transform _lootTransform;
         private Tween _tweenColor;
+        #endregion
+
+        #region Accessors
+        public EnemyType Type => _type;
+        public LootType LootType => _loot;
+
+        public int DropChance => _dropChance;
+        #endregion
 
         private void OnEnable()
         {
-            _health.Died += OnDied;
-            _health.DamageTaken += OnTakeDamage;
+            _health.OnDeath += HandleDeath;
+            _health.OnDamageTaken += HandleDamageTaken;
         }
 
         private void OnDisable()
         {
-            _health.Died -= OnDied;
-            _health.DamageTaken -= OnTakeDamage;
+            _health.OnDeath -= HandleDeath;
+            _health.OnDamageTaken -= HandleDamageTaken;
         }
 
-        private void OnDied()
+        public void Initialize(Player player, LootBase loot)
         {
-            _tweenColor.Kill();
+            _mover.Initialize(player.transform);
+            _damager.Initialize(player);
 
-            Died?.Invoke(this);
-
-            if (!ReferenceEquals(_lootTransform, null))
-            {
-                _lootTransform.SetParent(null);
-                _lootTransform.gameObject.SetActive(true);
-            }
-            
-            Destroy(gameObject);
-        }
-
-        public void Initialize(Transform player, LootBase loot)
-        {
-            _mover.Initialize(player);
             _lootTransform = loot.transform;
             
             BindLoot(loot);
         }
 
-        public void Initialize(Transform player)
+        public void Initialize(Player player)
         {
-            _mover.Initialize(player);
+            _mover.Initialize(player.transform);
+            _damager.Initialize(player);
         }
 
         private void BindLoot(LootBase loot)
@@ -76,15 +76,32 @@ namespace Enemy
             _lootTransform.gameObject.SetActive(false);
         }
 
-        private void OnTakeDamage()
+        private void HandleDamageTaken()
         {
             if (_sprite.color != Color.white)
+            {
                 _sprite.color = Color.white;
-            
+            }
+
             _tweenColor = _sprite.DOColor(Color.red, 0.1f).OnComplete(() =>
             {
                 _sprite.DOColor(Color.white, 0.1f);
             });
+        }
+
+        private void HandleDeath()
+        {
+            _tweenColor.Kill();
+
+            OnDeath?.Invoke(this);
+
+            if (_lootTransform != null)
+            {
+                _lootTransform.SetParent(null);
+                _lootTransform.gameObject.SetActive(true);
+            }
+
+            Destroy(gameObject);
         }
     }
 }

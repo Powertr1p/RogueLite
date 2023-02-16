@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 8210991870189965294}
   - component: {fileID: 869054394900747885}
   - component: {fileID: 3550937724801663762}
+  - component: {fileID: 3732507781117386428}
   - component: {fileID: 6862810722450623435}
   - component: {fileID: 3943755383521303587}
   m_Layer: 7
@@ -176,12 +177,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7011729f1aa40c9bf2dc77742d2ed87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mover: {fileID: 3550937724801663762}
-  _health: {fileID: 6862810722450623435}
-  _sprite: {fileID: 238566025671807697}
   _type: 0
+  _health: {fileID: 6862810722450623435}
+  _damager: {fileID: 3732507781117386428}
+  _mover: {fileID: 3550937724801663762}
+  _sprite: {fileID: 238566025671807697}
   _loot: 0
   _dropChance: 70
+  _damage: 1
 --- !u!114 &3550937724801663762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +199,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1
   _randomnessOffset: 2
+--- !u!114 &3732507781117386428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238566025751723524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40b0aeae07de4a12921417d4efcab05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 5
+  _attackDistance: 1
+  _attackInterval: 1
 --- !u!114 &6862810722450623435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad2734fa36343faa224ba6dd83b1192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _maxHealth: 100
+  _postHitInvincibilityTime: 0
 --- !u!61 &3943755383521303587
 BoxCollider2D:
   m_ObjectHideFlags: 0

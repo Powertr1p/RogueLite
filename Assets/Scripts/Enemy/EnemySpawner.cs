@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Random = UnityEngine.Random;
 
-namespace Enemy
+namespace PowerTrip
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private Transform _player;
-        [SerializeField] private UnityEngine.Camera _camera;
+        [SerializeField] private Player _player;
+        [SerializeField] private Camera _camera;
         [SerializeField] private EnemyFactory _factory;
         
         [Header("Параметры спавна врагов")]
@@ -75,6 +76,7 @@ namespace Enemy
                 float y = Mathf.Sin(angle) * _radius;
 
                 var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
+
                 instance.transform.position = _player.transform.position + new Vector3(x, y, 0);
                
                 CountEnemy(instance);
@@ -102,7 +104,7 @@ namespace Enemy
         private void CountEnemy(EnemyBase instance)
         {
             _activeEnemies.Add(instance);
-            instance.Died += StopCountEnemy;
+            instance.OnDeath += StopCountEnemy;
         }
         
         private int CalculateSpawnAmount()
@@ -171,7 +173,7 @@ namespace Enemy
 
         private void StopCountEnemy(EnemyBase enemy)
         {
-            enemy.Died -= StopCountEnemy;
+            enemy.OnDeath -= StopCountEnemy;
             
             _activeEnemies.Remove(enemy);
         }

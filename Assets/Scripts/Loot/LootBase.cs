@@ -1,12 +1,16 @@
 using UnityEngine;
 
-namespace Loot
+namespace PowerTrip
 {
     public abstract class LootBase : MonoBehaviour
     {
+        #region Fields
         [SerializeField] private LootType _type;
+        #endregion
 
-        public LootType GetType => _type;
+        #region Accessors
+        public LootType Type { get => _type; }
+        #endregion
 
         public abstract void Consume();
     }

@@ -1,24 +1,34 @@
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
-    [RequireComponent(typeof(PlayerInput))]
     public class PlayerMovement : MonoBehaviour
     {
+        #region Fields
         [SerializeField] private float _speed = 2f;
 
-        private PlayerInput _input;
-        private int _direction;
-        private Vector3 _lastPosition;
+        private Transform _t;
+
+        private bool _isEnabled = false;
+        #endregion
 
         private void Awake()
         {
-            _input = GetComponent<PlayerInput>();
+            _t = transform;
         }
 
-        private void Update()
+        public void SetState(bool state)
         {
-            transform.Translate(_input.Axises * (_speed * Time.deltaTime));
+            _isEnabled = state;
+        }
+
+        public void UpdateMovement(Vector3 input)
+        {
+            if (_isEnabled is false) return;
+
+            Vector3 movement = new Vector3(input.x, input.y, 0f).normalized;
+
+            _t.Translate(movement * (_speed * Time.deltaTime));
         }
     }
 }
