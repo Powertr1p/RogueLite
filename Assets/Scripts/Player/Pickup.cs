@@ -30,8 +30,7 @@ namespace Player
 
         private void Update()
         {
-            if (CanCheck())
-                DetectLoot();
+            DetectLoot();
 
             MoveDetectedLootTowardsPlayer();
         }
@@ -67,6 +66,8 @@ namespace Player
             }
         }
 
+        
+        //TODO: enable if lags
         private bool CanCheck()
         {
             _timeSinceLastUpdate += Time.deltaTime;
