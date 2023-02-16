@@ -4801,6 +4801,56 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4196538995e754c56ad7fe04edb37170, type: 3}
+--- !u!1 &600242864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600242865}
+  - component: {fileID: 600242866}
+  m_Layer: 0
+  m_Name: Pickup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &600242865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600242864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.04, y: -0.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1562486509}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &600242866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600242864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520a6d45247e49f38177477b15105d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 2.3
+  _pickupSpeed: 25
+  _lootLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _radiusColor: {r: 0.07508344, g: 0.0141509175, b: 1, a: 1}
 --- !u!1 &771685211
 GameObject:
   m_ObjectHideFlags: 0
@@ -5109,7 +5159,6 @@ GameObject:
   - component: {fileID: 1562486508}
   - component: {fileID: 1562486511}
   - component: {fileID: 1562486517}
-  - component: {fileID: 1562486518}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5144,6 +5193,7 @@ Transform:
   - {fileID: 1375896274}
   - {fileID: 1814787309}
   - {fileID: 1958915970}
+  - {fileID: 600242865}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5176,24 +5226,6 @@ MonoBehaviour:
   _currentWeapons: []
   _weaponHolder: {fileID: 1814787309}
   _testWeapon: {fileID: 1394540403350739809, guid: 4196538995e754c56ad7fe04edb37170, type: 3}
---- !u!114 &1562486518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1562486507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 520a6d45247e49f38177477b15105d5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _radius: 2.3
-  _pickupSpeed: 25
-  _lootLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  _radiusColor: {r: 0.07508344, g: 0.0141509175, b: 1, a: 1}
 --- !u!1001 &1615232143
 PrefabInstance:
   m_ObjectHideFlags: 0
