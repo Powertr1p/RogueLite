@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Loot;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace Player
         private Transform _transform;
         private float _timeSinceLastUpdate;
         private List<LootBase> _detectedLoot = new List<LootBase>();
+        private List<LootBase> _touchedLoot = new List<LootBase>();
 
         private void Awake()
         {
@@ -44,9 +46,18 @@ namespace Player
             {
                 if (results[i].TryGetComponent(out LootBase loot))
                 {
-                    if (_detectedLoot.Contains(loot)) continue;
+                    if (_detectedLoot.Contains(loot) || _touchedLoot.Contains(loot)) continue;
 
-                    _detectedLoot.Add(loot);
+                    Vector2 direction = (transform.position - loot.transform.position).normalized;
+
+                    _touchedLoot.Add(loot);
+                    var newDir = -(Vector3) direction + loot.transform.position;
+                    
+                    loot.transform.DOMove(newDir, 0.25f).SetEase(Ease.InQuad).OnComplete(() =>
+                    {
+                        _touchedLoot.Remove(loot);
+                        _detectedLoot.Add(loot);
+                    });
                 }
             }
         }
@@ -66,7 +77,6 @@ namespace Player
             }
         }
 
-        
         //TODO: enable if lags
         private bool CanCheck()
         {
