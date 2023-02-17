@@ -1,40 +1,35 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 namespace PowerTrip
 {
+    [RequireComponent(typeof(Detector))]
     public class Pickup : MonoBehaviour
     {
-        [Tooltip("Радиус, в котором игрок может поднимать предметы")]
-        [Range(0f, 100f)]
-        [SerializeField] private float _radius;
+        //[Tooltip("Радиус, в котором игрок может поднимать предметы")]
+        // [Range(0f, 100f)]
+        // [SerializeField] private float _radius;
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
-        [SerializeField] private LayerMask _lootLayer;
+        //[SerializeField] private LayerMask _lootLayer;
 
-        [Header("Для тестов")] 
-        [Tooltip("Изменяет цвет радиуса притягивания в окне редактора. В окне Game его не видно")]
-        [SerializeField] private Color _radiusColor;
+        //[Header("Для тестов")] 
+        //[Tooltip("Изменяет цвет радиуса притягивания в окне редактора. В окне Game его не видно")]
+        //[SerializeField] private Color _radiusColor;
 
-        private const float DelayBetweenChecks = 1f;
-        
         private Transform _t;
+        private Detector _detector;
         private float _timeSinceLastUpdate;
-        private List<LootBase> _detectedLoot = new List<LootBase>();
-        private List<LootBase> _touchedLoot = new List<LootBase>();
+        private List<ICollectable> _detectedLoot = new List<ICollectable>();
 
         private bool _isEnabled = false;
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = _radiusColor;
-            Gizmos.DrawWireSphere(transform.position, _radius);
-        }
 
         private void Awake()
         {
             _t = transform;
+            _detector = GetComponent<Detector>();
         }
 
         public void SetState(bool state)
@@ -46,64 +41,45 @@ namespace PowerTrip
         {
             if (_isEnabled is false) return;
 
-            DetectLoot();
-
+            Detect();
             MoveDetectedLootTowardsPlayer();
         }
-
-        private void DetectLoot()
+        
+        private void Detect()
         {
-            Collider2D[] results = new Collider2D[10];
+            var detected = _detector.Detect();
 
-            var hit = Physics2D.OverlapCircleNonAlloc(_t.position, _radius, results, _lootLayer);
-
-            for (int i = 0; i < hit; i++)
+            for (int i = 0; i < _detector.Hits; i++)
             {
-                if (results[i].TryGetComponent(out LootBase loot))
+                if (detected[i].TryGetComponent(out ICollectable collectible))
                 {
-                    if (_detectedLoot.Contains(loot) || _touchedLoot.Contains(loot)) continue;
-
-                    Vector2 direction = (transform.position - loot.transform.position).normalized;
-
-                    _touchedLoot.Add(loot);
-                    var newDir = -(Vector3) direction + loot.transform.position;
+                    if (_detectedLoot.Contains(collectible)) continue;
                     
-                    loot.transform.DOMove(newDir, 0.25f).SetEase(Ease.InQuad).OnComplete(() =>
-                    {
-                        _touchedLoot.Remove(loot);
-                        _detectedLoot.Add(loot);
-                    });
+                    Vector2 direction = (transform.position - detected[i].transform.position).normalized;
+                    collectible.Collect(direction, RegisterCollectible);
                 }
             }
+        }
+
+        private void RegisterCollectible(ICollectable collectable)
+        {
+            _detectedLoot.Add(collectable);
         }
 
         private void MoveDetectedLootTowardsPlayer()
         {
             for (int i = 0; i < _detectedLoot.Count; i++)
             {
-                Vector2 direction = (_t.position - _detectedLoot[i].transform.position).normalized;
+                Vector2 direction = (_t.position - _detectedLoot[i].Transform.position).normalized;
+                
+                _detectedLoot[i].Transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
 
-                _detectedLoot[i].transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
-
-                if (Vector3.Distance(_t.position, _detectedLoot[i].transform.position) < 0.1f)
+                if (Vector3.Distance(_t.position, _detectedLoot[i].Transform.position) < 0.1f)
                 {
                     _detectedLoot[i].Consume();
-
                     _detectedLoot.Remove(_detectedLoot[i]);
                 }
             }
-        }
-
-        //TODO: enable if lags
-        private bool CanCheck()
-        {
-            _timeSinceLastUpdate += Time.deltaTime;
-            
-            if (_timeSinceLastUpdate < DelayBetweenChecks) return false;
-            
-            _timeSinceLastUpdate = 0f;
-
-            return true;
         }
     }
 }
