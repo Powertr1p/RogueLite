@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Camera
+namespace PowerTrip
 {
     public class CameraFollower : MonoBehaviour
     {

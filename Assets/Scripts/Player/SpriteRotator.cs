@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
     [RequireComponent(typeof(Transform))]
     public class SpriteRotator : MonoBehaviour

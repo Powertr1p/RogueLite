@@ -1,7 +1,6 @@
 using UnityEngine;
-using Weapons.Base;
 
-namespace Weapons.SimpleWeapon1
+namespace PowerTrip
 {
     public class SimpleWeapon : Weapon
     {

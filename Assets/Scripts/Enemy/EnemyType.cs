@@ -1,4 +1,4 @@
-namespace Enemy
+namespace PowerTrip
 {
     public enum EnemyType
     {
