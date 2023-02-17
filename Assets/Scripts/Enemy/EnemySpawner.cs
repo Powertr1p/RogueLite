@@ -53,7 +53,7 @@ namespace PowerTrip
             if (IsCooldownEnded())
             {
                 SpawnEnemies();
-                SetupNewCooldownTimer();
+                SetupNewCooldownTimer(); 
             }
         }
 
