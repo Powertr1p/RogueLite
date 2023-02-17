@@ -11,6 +11,8 @@ namespace PowerTrip
         #endregion
 
         #region Fields
+        [SerializeField] private UI_Healthbar _ui;
+
         [SerializeField] private float _maxHealth = 100;
         [SerializeField] private float _postHitInvincibilityTime = 0f;
 
@@ -47,6 +49,11 @@ namespace PowerTrip
             }
 
             OnDamageTaken?.Invoke();
+
+            if (_ui != null)
+            {
+                _ui.UpdateHealthbar(_currentHealth / _maxHealth);
+            }
 
             if (_currentHealth <= 0)
             {
