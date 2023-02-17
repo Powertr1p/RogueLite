@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using Loot;
 using UnityEngine;
 
 namespace PowerTrip
