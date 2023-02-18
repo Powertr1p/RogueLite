@@ -1,19 +1,42 @@
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
     public class PlayerInput : MonoBehaviour
     {
-        public Vector3 Axises => _inputAxises;
-        public bool IsInputActive => _isInputActive;
-        
-        private Vector3 _inputAxises;
-        private bool _isInputActive;
+        #region Fields
+        private Vector2 _direction;
+
+        private bool _isEnabled = false;
+        private bool _isInputActive = false;
+        #endregion
+
+        #region Accessors
+        public Vector2 Direction { get => _direction; }
+        public bool IsInputActive { get => _isInputActive; }
+        #endregion
 
         private void Update()
         {
-            _inputAxises = new Vector3(Input.GetAxisRaw("Horizontal") , Input.GetAxisRaw("Vertical"), 0);
-            _isInputActive = _inputAxises.x != 0 || _inputAxises.y != 0;
+            if (_isEnabled is false)
+            {
+                _direction.x = 0f;
+                _direction.y = 0f;
+
+                _isInputActive = false;
+
+                return;
+            }
+
+            _direction.x = Input.GetAxisRaw("Horizontal");
+            _direction.y = Input.GetAxisRaw("Vertical");
+
+            _isInputActive = _direction.x != 0 || _direction.y != 0;
+        }
+
+        public void SetState(bool state)
+        {
+            _isEnabled = state;
         }
     }
 }

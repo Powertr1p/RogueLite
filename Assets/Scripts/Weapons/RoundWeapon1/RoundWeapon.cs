@@ -1,16 +1,17 @@
 using System;
 using UnityEngine;
-using Weapons.Base;
 
-namespace Weapons.RoundWeapon1
+namespace PowerTrip
 {
     public class RoundWeapon : Weapon
     {
+        #region Fields
         [SerializeField] private float _delay = 0.1f;
         [SerializeField] private float _numberOfSpawns = 10f;
         [SerializeField] private float _radius = 5f;
 
         private Vector3 _direction;
+        #endregion
 
         protected override void InitializeProjectile(Projectile instance)
         {
@@ -32,6 +33,7 @@ namespace Weapons.RoundWeapon1
                 _direction = new Vector3(x, y);
                 
                 InitializeProjectile(instance);
+
                 angle += nextAngle;
             }
         }

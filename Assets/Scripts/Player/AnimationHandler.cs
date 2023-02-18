@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
     public class AnimationHandler : MonoBehaviour
     {

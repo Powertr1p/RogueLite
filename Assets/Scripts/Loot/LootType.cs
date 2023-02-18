@@ -1,4 +1,4 @@
-namespace Loot
+namespace PowerTrip
 {
     public enum LootType
     {

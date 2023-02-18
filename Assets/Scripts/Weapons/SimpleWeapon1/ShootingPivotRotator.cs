@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Weapons.SimpleWeapon1
+namespace PowerTrip
 {
     public class ShootingPivotRotator : MonoBehaviour
     {

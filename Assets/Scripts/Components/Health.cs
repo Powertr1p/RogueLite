@@ -1,27 +1,57 @@
 using System;
-using Interfaces;
 using UnityEngine;
 
-namespace Components
+namespace PowerTrip
 {
-    public class Health : MonoBehaviour, IDamagable
+    public class Health : MonoBehaviour, IDamageable
     {
-        [SerializeField] private float _health;
+        #region Events
+        public event Action OnDamageTaken;
+        public event Action OnDeath;
+        #endregion
 
-        public event Action Died;
-        public event Action DamageTaken;
-        public float GetHealth => _health;
+        #region Fields
+        [SerializeField] private float _maxHealth = 100;
+        [SerializeField] private float _postHitInvincibilityTime = 0f;
+
+        private float _currentHealth;
+        private float _postHitInvincibilityTimestamp = 0f;
+        #endregion
+
+        #region Accessors
+        public float MaxHealth { get => _maxHealth; }
+        public float CurrentHealth { get => _currentHealth; }
+        #endregion
+
+        private void Start()
+        {
+            Reset();
+        }
+
+        private void Reset()
+        {
+            _currentHealth = _maxHealth;
+        }
 
         public void GetDamage(float amout)
         {
-            if (_health <= 0) return;
-            
-            _health = Mathf.Max(_health - amout, 0);
+            if (_currentHealth <= 0) return;
 
-            DamageTaken?.Invoke();
+            if (Time.time < _postHitInvincibilityTimestamp) return;
 
-            if (_health <= 0)
-                Died.Invoke();
+            _currentHealth = Mathf.Max(_currentHealth - amout, 0);
+
+            if (_postHitInvincibilityTime > 0f)
+            {
+                _postHitInvincibilityTimestamp = Time.time + _postHitInvincibilityTime;
+            }
+
+            OnDamageTaken?.Invoke();
+
+            if (_currentHealth <= 0)
+            {
+                OnDeath?.Invoke();
+            }
         }
     }
 }

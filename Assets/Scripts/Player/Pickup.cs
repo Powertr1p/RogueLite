@@ -1,88 +1,85 @@
+using System;
 using System.Collections.Generic;
-using Loot;
+using DG.Tweening;
 using UnityEngine;
 
-namespace Player
+namespace PowerTrip
 {
+    [RequireComponent(typeof(Detector))]
     public class Pickup : MonoBehaviour
     {
-        [Tooltip("Радиус, в котором игрок может поднимать предметы")]
-        [Range(0f, 100f)]
-        [SerializeField] private float _radius;
+        //[Tooltip("Радиус, в котором игрок может поднимать предметы")]
+        // [Range(0f, 100f)]
+        // [SerializeField] private float _radius;
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
-        [SerializeField] private LayerMask _lootLayer;
+        //[SerializeField] private LayerMask _lootLayer;
 
-        [Header("Для тестов")] 
-        [Tooltip("Изменяет цвет радиуса притягивания в окне редактора. В окне Game его не видно")]
-        [SerializeField] private Color _radiusColor;
+        //[Header("Для тестов")] 
+        //[Tooltip("Изменяет цвет радиуса притягивания в окне редактора. В окне Game его не видно")]
+        //[SerializeField] private Color _radiusColor;
 
-        private const float DelayBetweenChecks = 1f;
-        
-        private Transform _transform;
+        private Transform _t;
+        private Detector _detector;
         private float _timeSinceLastUpdate;
-        private List<LootBase> _detectedLoot = new List<LootBase>();
+        private List<ICollectable> _detectedLoot = new List<ICollectable>();
+
+        private bool _isEnabled = false;
 
         private void Awake()
         {
-            _transform = transform;
+            _t = transform;
+            _detector = GetComponent<Detector>();
         }
 
-        private void Update()
+        public void SetState(bool state)
         {
-            DetectLoot();
+            _isEnabled = state;
+        }
 
+        public void UpdatePickup()
+        {
+            if (_isEnabled is false) return;
+
+            Detect();
             MoveDetectedLootTowardsPlayer();
         }
-
-        private void DetectLoot()
+        
+        private void Detect()
         {
-            Collider2D[] results = new Collider2D[10];
-            var hit = Physics2D.OverlapCircleNonAlloc(_transform.position, _radius, results, _lootLayer);
+            var detected = _detector.Detect();
 
-            for (int i = 0; i < hit; i++)
+            for (int i = 0; i < _detector.Hits; i++)
             {
-                if (results[i].TryGetComponent(out LootBase loot))
+                if (detected[i].TryGetComponent(out ICollectable collectible))
                 {
-                    if (_detectedLoot.Contains(loot)) continue;
-
-                    _detectedLoot.Add(loot);
+                    if (_detectedLoot.Contains(collectible)) continue;
+                    
+                    Vector2 direction = (transform.position - detected[i].transform.position).normalized;
+                    collectible.Collect(direction, RegisterCollectible);
                 }
             }
+        }
+
+        private void RegisterCollectible(ICollectable collectable)
+        {
+            _detectedLoot.Add(collectable);
         }
 
         private void MoveDetectedLootTowardsPlayer()
         {
             for (int i = 0; i < _detectedLoot.Count; i++)
             {
-                Vector2 direction = (transform.position - _detectedLoot[i].transform.position).normalized;
-                _detectedLoot[i].transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
+                Vector2 direction = (_t.position - _detectedLoot[i].Transform.position).normalized;
+                
+                _detectedLoot[i].Transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
 
-                if (Vector3.Distance(transform.position, _detectedLoot[i].transform.position) < 0.1f)
+                if (Vector3.Distance(_t.position, _detectedLoot[i].Transform.position) < 0.1f)
                 {
                     _detectedLoot[i].Consume();
                     _detectedLoot.Remove(_detectedLoot[i]);
                 }
             }
-        }
-
-        
-        //TODO: enable if lags
-        private bool CanCheck()
-        {
-            _timeSinceLastUpdate += Time.deltaTime;
-            
-            if (_timeSinceLastUpdate < DelayBetweenChecks) return false;
-            
-            _timeSinceLastUpdate = 0f;
-
-            return true;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = _radiusColor;
-            Gizmos.DrawWireSphere(transform.position, _radius);
         }
     }
 }

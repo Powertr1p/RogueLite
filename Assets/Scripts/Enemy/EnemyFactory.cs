@@ -1,23 +1,28 @@
 using System.Collections.Generic;
 using System.Linq;
-using Loot;
+
 using UnityEngine;
 
-namespace Enemy
+namespace PowerTrip
 {
     public class EnemyFactory : MonoBehaviour
     {
         [SerializeField] private List<EnemyBase> _enemyPrefabs;
         [SerializeField] private LootFactory _lootFactory;
 
-        public EnemyBase GetEnemy(EnemyType type, Transform player)
+        public EnemyBase GetEnemy(EnemyType type, Player player)
         {
-            var instance = Instantiate(_enemyPrefabs.FirstOrDefault(x => x.GetType == type));
+            var instance = Instantiate(_enemyPrefabs.FirstOrDefault(x => x.Type == type));
             
             if (Random.Range(1f, 100f) <= instance.DropChance)
-                instance.Initialize(player, GetLoot(instance.GetLootType));
+            {
+                instance.Initialize(player, GetLoot(instance.LootType));
+            }
+
             else
+            {
                 instance.Initialize(player);
+            }
 
             return instance;
         }
@@ -25,6 +30,7 @@ namespace Enemy
         private LootBase GetLoot(LootType type)
         {
             var instance = _lootFactory.GetLoot(type);
+
             return instance;
         }
     }
