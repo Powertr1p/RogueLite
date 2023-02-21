@@ -9,13 +9,10 @@ namespace PowerTrip
     [RequireComponent(typeof(Collider))]
     public class ExpCrystal : LootBase
     {
-        private Collider2D _collider;
-        private bool _canCollect = true;
+        [SerializeField] private Ease _easing = Ease.InQuad;
+        [SerializeField] private float _animationDuration = 0.25f;
         
-        private void Awake()
-        {
-            _collider = GetComponent<Collider2D>();
-        }
+        private bool _canCollect = true;
 
         public override void Collect(Vector2 direction, Action<ICollectable> onComplete)
         {
@@ -24,11 +21,8 @@ namespace PowerTrip
             
             var newDir = -(Vector3)direction + transform.position;
 
-            //ToggleCollider(false);
-            
-            transform.DOMove(newDir, 0.25f).SetEase(Ease.InQuad).OnComplete(() =>
+            transform.DOMove(newDir, _animationDuration).SetEase(_easing).OnComplete(() =>
             {
-               //ToggleCollider(true);
                 onComplete?.Invoke(this);
             });
         }
@@ -36,11 +30,6 @@ namespace PowerTrip
         public override void Consume()
         {
             Destroy(gameObject);
-        }
-
-        private void ToggleCollider(bool isActive)
-        {
-            _collider.enabled = isActive;
         }
     }
 }
