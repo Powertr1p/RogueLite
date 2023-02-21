@@ -18,9 +18,7 @@ namespace PowerTrip
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
-            {
                 DealDamage(damageable, _damage);
-            }
         }
 
         private void OnBecameInvisible()
@@ -59,7 +57,6 @@ namespace PowerTrip
             if (_currentNumberOfCollisions >= _maxNumberOfCollisions)
             {
                 // TODO: use pooling
-
                 Destroy(gameObject);
             }
         }
