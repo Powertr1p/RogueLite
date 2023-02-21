@@ -4,6 +4,8 @@ namespace PowerTrip
 {
     public class Projectile : MonoBehaviour, IDamaging
     {
+        [SerializeField] private Transform _visual;
+        
         private Vector3 _direction;
         private float _speed;
         private float _damage;
@@ -41,6 +43,8 @@ namespace PowerTrip
             _speed = speed;
             _damage = damage;
 
+            RotateToDirection();
+            
             _isInitialized = true;
         }
 
@@ -57,6 +61,15 @@ namespace PowerTrip
                 // TODO: use pooling
 
                 Destroy(gameObject);
+            }
+        }
+
+        private void RotateToDirection()
+        {
+            if (_direction != Vector3.zero)
+            {
+                float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+                _visual.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
     }
