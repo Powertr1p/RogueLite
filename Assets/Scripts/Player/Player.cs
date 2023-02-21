@@ -38,12 +38,12 @@ namespace PowerTrip
         {
             if (_isEnabled is false) return;
 
-            if (_movement != null)
+            if (!ReferenceEquals(_movement, null))
             {
                 _movement.UpdateMovement(_input.Direction);
             }
 
-            if (_pickup != null)
+            if (!ReferenceEquals(_pickup, null))
             {
                 _pickup.UpdatePickup();
             }
