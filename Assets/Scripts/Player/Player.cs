@@ -38,15 +38,20 @@ namespace PowerTrip
         {
             if (_isEnabled is false) return;
 
-            if (!ReferenceEquals(_movement, null))
+            if (IsNotNull(_movement))
             {
                 _movement.UpdateMovement(_input.Direction);
             }
 
-            if (!ReferenceEquals(_pickup, null))
+            if (IsNotNull(_pickup))
             {
                 _pickup.UpdatePickup();
             }
+        }
+
+        private bool IsNotNull(MonoBehaviour reference)
+        {
+            return !ReferenceEquals(reference, null);
         }
 
         private void OnDestroy()
