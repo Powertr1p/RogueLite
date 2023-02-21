@@ -9,7 +9,7 @@ namespace PowerTrip
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
 
-        private Transform _t;
+        private Transform _transform;
         private Detector _detector;
         private float _timeSinceLastUpdate;
         private List<ICollectable> _detectedLoot = new List<ICollectable>();
@@ -18,7 +18,7 @@ namespace PowerTrip
 
         private void Awake()
         {
-            _t = transform;
+            _transform = transform;
             _detector = GetComponent<Detector>();
         }
 
@@ -41,12 +41,11 @@ namespace PowerTrip
 
             for (int i = 0; i < _detector.Hits; i++)
             {
-                if (detected[i].TryGetComponent(out ICollectable collectible))
+                if (detected[i].TryGetComponent(out ICollectable collectable))
                 {
-                    if (_detectedLoot.Contains(collectible)) continue;
+                    if (_detectedLoot.Contains(collectable)) continue;
                     
-                    Vector2 direction = (transform.position - detected[i].transform.position).normalized;
-                    collectible.Collect(direction, RegisterCollectible);
+                    collectable.Collect(GetDirection(collectable), RegisterCollectible);
                 }
             }
         }
@@ -60,16 +59,28 @@ namespace PowerTrip
         {
             for (int i = 0; i < _detectedLoot.Count; i++)
             {
-                Vector2 direction = (_t.position - _detectedLoot[i].Transform.position).normalized;
-                
+                Vector2 direction = GetDirection(_detectedLoot[i]);
                 _detectedLoot[i].Transform.position += (Vector3) (direction * (_pickupSpeed * Time.deltaTime));
 
-                if (Vector3.Distance(_t.position, _detectedLoot[i].Transform.position) < 0.1f)
-                {
-                    _detectedLoot[i].Consume();
-                    _detectedLoot.Remove(_detectedLoot[i]);
-                }
+                if (CanConsume(_detectedLoot[i]))
+                    Consume(_detectedLoot[i]);
             }
+        }
+
+        private Vector2 GetDirection(ICollectable collectable)
+        {
+            return (_transform.position - collectable.Transform.position).normalized;
+        }
+
+        private bool CanConsume(ICollectable collectable)
+        {
+            return Vector3.Distance(_transform.position, collectable.Transform.position) < 0.1f;
+        }
+
+        private void Consume(ICollectable collectable)
+        {
+            collectable.Consume();
+            _detectedLoot.Remove(collectable);
         }
     }
 }
