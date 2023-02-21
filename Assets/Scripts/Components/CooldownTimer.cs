@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PowerTrip
 {
-    public class CooldownTimer : MonoBehaviour
+    public sealed class CooldownTimer : MonoBehaviour
     {
         #region Events
         public event Action OnCooldownExpired;

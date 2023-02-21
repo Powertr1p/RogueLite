@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PowerTrip
 {
-    public class LootFactory : MonoBehaviour
+    public sealed class LootFactory : MonoBehaviour
     {
         [SerializeField] private List<LootBase> _lootPrefabs;
 

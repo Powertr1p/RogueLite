@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PowerTrip
 {
-    public class Health : MonoBehaviour, IDamageable
+    public sealed class Health : MonoBehaviour, IDamageable
     {
         #region Events
         public event Action OnDamageTaken;
