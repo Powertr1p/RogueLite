@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 namespace PowerTrip
@@ -8,16 +6,8 @@ namespace PowerTrip
     [RequireComponent(typeof(Detector))]
     public class Pickup : MonoBehaviour
     {
-        //[Tooltip("Радиус, в котором игрок может поднимать предметы")]
-        // [Range(0f, 100f)]
-        // [SerializeField] private float _radius;
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
-        //[SerializeField] private LayerMask _lootLayer;
-
-        //[Header("Для тестов")] 
-        //[Tooltip("Изменяет цвет радиуса притягивания в окне редактора. В окне Game его не видно")]
-        //[SerializeField] private Color _radiusColor;
 
         private Transform _t;
         private Detector _detector;
