@@ -28,7 +28,6 @@ namespace PowerTrip
         private void OnBecameInvisible()
         {
             // TODO: use pooling
-
             Destroy(gameObject);
         }
 
