@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace PowerTrip
@@ -10,16 +11,26 @@ namespace PowerTrip
         [SerializeField] private Pickup _pickup;
         [SerializeField] private PlayerWeaponInventory _weaponInventory;
         [SerializeField] private Health _health;
+        [SerializeField] private ExperienceGainer _experience;
 
         private bool _isEnabled = false;
         #endregion
 
-        private void Awake()
+        private void OnEnable()
         {
-            if (_health != null)
+            if (IsNotNull(_health))
             {
                 _health.OnDamageTaken += HandleDamageTaken;
                 _health.OnDeath += HandleDeath;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (IsNotNull(_health))
+            {
+                _health.OnDamageTaken -= HandleDamageTaken;
+                _health.OnDeath -= HandleDeath;
             }
         }
 
@@ -30,6 +41,7 @@ namespace PowerTrip
             SetInputState(true);
             SetMovementState(true);
             SetPickupState(true);
+            SetExperienceGainerState(true);
 
             SetState(true);
         }
@@ -56,11 +68,7 @@ namespace PowerTrip
 
         private void OnDestroy()
         {
-            if (_health != null)
-            {
-                _health.OnDamageTaken -= HandleDamageTaken;
-                _health.OnDeath -= HandleDeath;
-            }
+            OnDisable();
         }
 
         public Player SetState(bool state)
@@ -75,6 +83,15 @@ namespace PowerTrip
             if (_input is null) return this;
 
             _input.SetState(state);
+
+            return this;
+        }
+
+        public Player SetExperienceGainerState(bool state)
+        {
+            if (_experience is null) return this;
+
+            _experience.SetState(state);
 
             return this;
         }
@@ -111,6 +128,7 @@ namespace PowerTrip
             SetInputState(false);
             SetMovementState(false);
             SetPickupState(false);
+            SetExperienceGainerState(false);
         }
     }
 }

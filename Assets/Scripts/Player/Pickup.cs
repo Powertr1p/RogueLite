@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace PowerTrip
         [Tooltip("Скорость с которой лут летит в сторону игрока")]
         [SerializeField] private float _pickupSpeed;
 
+        public Action<ICollectable> OnConsume;
+        
         private Transform _transform;
         private Detector _detector;
         private float _timeSinceLastUpdate;
@@ -79,6 +82,8 @@ namespace PowerTrip
 
         private void Consume(ICollectable collectable)
         {
+            OnConsume?.Invoke(collectable);
+
             collectable.Consume();
             _detectedLoot.Remove(collectable);
         }

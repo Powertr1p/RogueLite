@@ -11,6 +11,9 @@ namespace PowerTrip
     {
         [SerializeField] private Ease _easing = Ease.InQuad;
         [SerializeField] private float _animationDuration = 0.25f;
+        [SerializeField] private float _experienceGain = 10f;
+
+        public float Experience => _experienceGain;
         
         private bool _canCollect = true;
 
