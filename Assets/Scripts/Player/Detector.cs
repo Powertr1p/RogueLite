@@ -44,7 +44,7 @@ namespace PowerTrip
             return true;
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = _radiusColor;
             Gizmos.DrawWireSphere(transform.position, _radius);

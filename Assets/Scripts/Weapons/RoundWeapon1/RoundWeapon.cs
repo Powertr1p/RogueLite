@@ -6,7 +6,6 @@ namespace PowerTrip
     public class RoundWeapon : Weapon
     {
         #region Fields
-        [SerializeField] private float _delay = 0.1f;
         [SerializeField] private float _numberOfSpawns = 10f;
         [SerializeField] private float _radius = 5f;
 
