@@ -4830,6 +4830,10 @@ PrefabInstance:
       propertyPath: _radiusColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6144173376333238786, guid: 25356127fef7a44108257a4d3b589d7d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7456980780088320247, guid: 25356127fef7a44108257a4d3b589d7d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4951,7 +4955,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1151014324}
   - component: {fileID: 1151014323}
-  - component: {fileID: 1151014322}
   m_Layer: 0
   m_Name: AudioPlayer
   m_TagString: Untagged
@@ -4959,14 +4962,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1151014322
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151014321}
-  m_Enabled: 1
 --- !u!82 &1151014323
 AudioSource:
   m_ObjectHideFlags: 0
