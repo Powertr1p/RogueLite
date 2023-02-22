@@ -1,13 +1,15 @@
-using System;
+using Data;
 using UnityEngine;
 
 namespace PowerTrip
 {
     public class ExperienceGainer : MonoBehaviour
     {
-        [SerializeField] private float _currentExp = 0f;
         [SerializeField] private Pickup _pickup;
+        [SerializeField] private ExperienceTable _table;
 
+        private float _currentExp = 0f;
+        
         private bool _isEnabled = false;
         
         private void OnEnable()
