@@ -9,6 +9,8 @@ namespace PowerTrip
         [SerializeField] private ExperienceTable _table;
 
         private float _currentExp = 0f;
+        private int _currentLevel;
+        private float _targetExpToLevelUp;
         
         private bool _isEnabled = false;
         

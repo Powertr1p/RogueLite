@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926b5ffb2b6c4d17a91adef468ed45e5, type: 3}
   m_Name: ExperienceTable
   m_EditorClassIdentifier: 
-  _experienceDatas: []
+  _experienceDatas:
+  - Level: 1
+    Experience: 5000
