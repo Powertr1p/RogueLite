@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 
 using DG.Tweening;
-using JetBrains.Annotations;
 
 namespace PowerTrip
 {
@@ -83,15 +82,17 @@ namespace PowerTrip
                 _sprite.color = Color.white;
             }
 
+            _tweenColor?.Kill();
             _tweenColor = _sprite.DOColor(Color.red, 0.1f).OnComplete(() =>
             {
-                _sprite.DOColor(Color.white, 0.1f);
+                _tweenColor?.Kill();
+                _tweenColor = _sprite.DOColor(Color.white, 0.1f);
             });
         }
 
         private void HandleDeath()
         {
-            _tweenColor.Kill();
+            _tweenColor?.Kill();
 
             OnDeath?.Invoke(this);
 
