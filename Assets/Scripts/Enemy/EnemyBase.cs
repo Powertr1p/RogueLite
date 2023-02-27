@@ -22,6 +22,7 @@ namespace PowerTrip
         [SerializeField] protected EnemyDamager _damager;
         [SerializeField] protected EnemyMover _mover;
         [SerializeField] protected SpriteRenderer _sprite;
+        [SerializeField] protected Transform _blood;
 
         [Header("Лут")]
         [SerializeField] protected LootType _loot;
@@ -100,6 +101,9 @@ namespace PowerTrip
                 _lootTransform.SetParent(null);
                 _lootTransform.gameObject.SetActive(true);
             }
+            
+            _blood.SetParent(null);
+            _blood.gameObject.SetActive(true);
 
             Destroy(gameObject);
         }
