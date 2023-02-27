@@ -14,7 +14,12 @@ namespace DefaultNamespace
             transform. eulerAngles = euler;
             
             var targetValue = Random.Range(0.5f, 0.8f);
-            transform.DOScale(new Vector3(targetValue, targetValue, targetValue), 0.25f).SetEase(Ease.InOutQuad);
+            transform.DOScale(new Vector3(targetValue, targetValue, targetValue), 0.25f).SetEase(Ease.InOutQuad)
+                .OnComplete(
+                    () =>
+                    {
+                        gameObject.isStatic = true;
+                    });
         }
     }
 }
