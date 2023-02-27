@@ -27,7 +27,6 @@ namespace PowerTrip
 
         private void OnBecameInvisible()
         {
-            // TODO: use pooling
             Destroy(gameObject);
         }
 
@@ -47,6 +46,7 @@ namespace PowerTrip
             RotateToDirection();
             
             _isInitialized = true;
+            Destroy(gameObject, 5f);
         }
 
         public void DealDamage(IDamageable damageable, float amout)
