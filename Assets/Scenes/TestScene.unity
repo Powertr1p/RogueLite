@@ -4809,14 +4809,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1031557210805609955, guid: 25356127fef7a44108257a4d3b589d7d, type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7706170624971456816, guid: 25356127fef7a44108257a4d3b589d7d, type: 3}
-      propertyPath: _isDynamic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25356127fef7a44108257a4d3b589d7d, type: 3}
 --- !u!1 &636578566
@@ -4953,10 +4945,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
-  _textPrefab: {fileID: 1874523602112738299, guid: 9acfa2aedee094d929c2d7a67218895d, type: 3}
-  _moveOffset: 5
-  _moveOffsetDuration: 0.5
-  _ease: 1
+  _prefabTextLabel: {fileID: 0}
+  _labelMovementEase: 1
+  _labelMovementOffset: 5
+  _labelMovementDuration: 0.5
 --- !u!1 &771685211
 GameObject:
   m_ObjectHideFlags: 0

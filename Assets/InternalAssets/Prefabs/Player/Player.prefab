@@ -113,9 +113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad2734fa36343faa224ba6dd83b1192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 7706170624971456816}
+  _healthbar: {fileID: 0}
   _maxHealth: 100
   _postHitInvincibilityTime: 2
+  _isShowingDamageText: 1
+  _damageTextOffset: 0
 --- !u!114 &1669160132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +204,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1355073181
+  m_SortingLayer: 5
+  m_SortingOrder: 4
   m_Sprite: {fileID: -782222049, guid: adcf8accff4e3cc4bbab57fd4c3a22e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -907,11 +909,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8980460198938748781, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.71
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980460198938748781, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980460198938748781, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_LocalPosition.z
