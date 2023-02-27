@@ -9,6 +9,7 @@ namespace PowerTrip
     {
         [SerializeField] private List<EnemyBase> _enemyPrefabs;
         [SerializeField] private LootFactory _lootFactory;
+        [SerializeField] private BloodPool _bloodPool;
 
         public EnemyBase GetEnemy(EnemyType type, Player player)
         {
@@ -18,7 +19,6 @@ namespace PowerTrip
             {
                 instance.Initialize(player, GetLoot(instance.LootType));
             }
-
             else
             {
                 instance.Initialize(player);

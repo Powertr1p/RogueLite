@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DG.Tweening;
+using TMPro;
 
 namespace PowerTrip
 {
     public class UI_TextLabel : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private Text _text;
+        [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Color _color;
 
         private Tween _tweenMovement;
