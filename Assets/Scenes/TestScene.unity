@@ -5079,6 +5079,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96432ac0dd704cb3a54199c88b74c0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _limit: 50
+  _pool: []
+  _prefab: {fileID: 0}
 --- !u!4 &844283154
 Transform:
   m_ObjectHideFlags: 0
@@ -5690,6 +5693,7 @@ MonoBehaviour:
   _enemyPrefabs:
   - {fileID: 869054394900747885, guid: ff9bb9290fa284339825a0a5447df721, type: 3}
   _lootFactory: {fileID: 790972912}
+  _bloodPool: {fileID: 0}
 --- !u!1 &2085068202
 GameObject:
   m_ObjectHideFlags: 0
