@@ -27,9 +27,6 @@ namespace PowerTrip
         [SerializeField] protected LootType _loot;
         [SerializeField] protected int _dropChance;
 
-        [Header("Урон")]
-        [SerializeField] protected float _damage = 1f;
-
         private Transform _lootTransform;
         private Tween _tweenColor;
         #endregion
