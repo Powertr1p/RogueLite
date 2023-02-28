@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8980460198938748781}
   - component: {fileID: 8972130423887475740}
+  - component: {fileID: 2285307355883081198}
   m_Layer: 0
   m_Name: AutoTargetWeapon
   m_TagString: Untagged
@@ -45,9 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projectile: {fileID: 6426112486966320878, guid: 26bb2ed6e5df1466c859902b51471334, type: 3}
-  Cooldown: 1
   Damage: 50
   ProjectileSpeed: 10
   _layerToDetectEnemies:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &2285307355883081198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563062905047357366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63496d7cbb64a7981a90a898f541a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 0.25

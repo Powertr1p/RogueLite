@@ -12,6 +12,7 @@ namespace PowerTrip
         [SerializeField] private PlayerWeaponInventory _weaponInventory;
         [SerializeField] private Health _health;
         [SerializeField] private ExperienceGainer _experience;
+        [SerializeField] private WeaponPickuper _weaponPickuper;
 
         private bool _isEnabled = false;
         #endregion
@@ -42,6 +43,7 @@ namespace PowerTrip
             SetMovementState(true);
             SetPickupState(true);
             SetExperienceGainerState(true);
+            SetWeaponPickupState(true);
 
             SetState(true);
         }
@@ -58,6 +60,11 @@ namespace PowerTrip
             if (IsNotNull(_pickup))
             {
                 _pickup.UpdatePickup();
+            }
+
+            if (IsNotNull(_weaponPickuper))
+            {
+                _weaponPickuper.UpdateWeaponPickup();
             }
         }
 
@@ -83,6 +90,15 @@ namespace PowerTrip
             if (_input is null) return this;
 
             _input.SetState(state);
+
+            return this;
+        }
+
+        public Player SetWeaponPickupState(bool state)
+        {
+            if (_weaponPickuper is null) return this;
+            
+            _weaponPickuper.SetState(state);
 
             return this;
         }
@@ -129,6 +145,7 @@ namespace PowerTrip
             SetMovementState(false);
             SetPickupState(false);
             SetExperienceGainerState(false);
+            SetWeaponPickupState(false);
         }
     }
 }

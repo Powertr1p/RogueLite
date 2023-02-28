@@ -39,6 +39,7 @@ Transform:
   - {fileID: 3105788124483983535}
   - {fileID: 1031557210974868442}
   - {fileID: 6096591374592832305}
+  - {fileID: 4754641686985430272}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,6 +61,7 @@ MonoBehaviour:
   _weaponInventory: {fileID: 1031557210690060738}
   _health: {fileID: 1031557210690060751}
   _experience: {fileID: 1669160132}
+  _weaponPickuper: {fileID: 6774795060126363386}
 --- !u!114 &1031557210690060763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +333,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 1031557210805609954}
   _input: {fileID: 1031557210690060763}
+--- !u!1 &1121849796814857211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4754641686985430272}
+  - component: {fileID: 6774795060126363386}
+  - component: {fileID: 4346560432772395278}
+  - component: {fileID: 1785219478438011237}
+  m_Layer: 0
+  m_Name: WeaponPicker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4754641686985430272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121849796814857211}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031557210690060762}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6774795060126363386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121849796814857211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f859536c49be4a6fbf3072ee05cf0bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponInventory: {fileID: 0}
+--- !u!114 &4346560432772395278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121849796814857211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ed9daae3cf4d7d97fdf52989cecde7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 0.74
+  _layer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _radiusColor: {r: 0, g: 1, b: 0.054581404, a: 1}
+--- !u!114 &1785219478438011237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121849796814857211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520a6d45247e49f38177477b15105d5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupSpeed: 25
 --- !u!1 &2515934347478101469
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +422,7 @@ GameObject:
   - component: {fileID: 5528156216430107834}
   - component: {fileID: 6918865780659815396}
   m_Layer: 0
-  m_Name: Pickup
+  m_Name: LootPicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,14 +880,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1031557210974868442}
     m_Modifications:
-    - target: {fileID: 1016667639843273646, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
-      propertyPath: _cooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2680251593024509352, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
-      propertyPath: Damage
-      value: 35
-      objectReference: {fileID: 0}
     - target: {fileID: 5663832176697543572, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -857,10 +928,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoundWeapon
       objectReference: {fileID: 0}
-    - target: {fileID: 7578528290573335375, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
 --- !u!4 &4668309262394937388 stripped
@@ -875,33 +942,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1031557210974868442}
     m_Modifications:
-    - target: {fileID: 331090269639136256, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: _cooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2285307355883081198, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: _cooldown
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_Name
       value: AutoTargetWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: Damage
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: Cooldown
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8972130423887475740, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
-      propertyPath: ProjectileSpeed
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8980460198938748781, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_RootOrder

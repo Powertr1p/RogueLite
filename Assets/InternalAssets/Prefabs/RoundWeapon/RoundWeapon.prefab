@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5663832176697543572}
   - component: {fileID: 2680251593024509352}
+  - component: {fileID: 1016667639843273646}
   m_Layer: 0
   m_Name: RoundWeapon
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7578528290573335375}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,9 +46,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projectile: {fileID: 6426112486966320878, guid: 586edadd146b647f694150618519621d, type: 3}
-  Cooldown: 1
-  Damage: 50
+  Damage: 35
   ProjectileSpeed: 2
-  _delay: 0.1
   _numberOfSpawns: 10
   _radius: 5
+--- !u!114 &1016667639843273646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578528290573335375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63496d7cbb64a7981a90a898f541a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 3

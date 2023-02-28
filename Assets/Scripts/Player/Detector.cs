@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PowerTrip
@@ -16,7 +14,7 @@ namespace PowerTrip
         private const float DelayBetweenChecks = 1f;
         private float _timeSinceLastUpdate;
         private int _hits;
-        
+
         private Transform _transform;
 
         private void Awake()

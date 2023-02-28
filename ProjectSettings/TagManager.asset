@@ -15,7 +15,7 @@ TagManager:
   - Enemy
   - EnemyWalkingCollider
   - Loot
-  - 
+  - PickableWeapon
   - 
   - 
   - 
