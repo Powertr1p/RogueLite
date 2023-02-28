@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abdb4ad33274b0f80eaa3c7e83535e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 5
 --- !u!114 &1031557210690060738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad2734fa36343faa224ba6dd83b1192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthbar: {fileID: 0}
+  _healthbar: {fileID: 7706170624971456816}
   _maxHealth: 100
   _postHitInvincibilityTime: 2
   _isShowingDamageText: 1
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f859536c49be4a6fbf3072ee05cf0bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInventory: {fileID: 0}
+  _weaponInventory: {fileID: 1031557210690060738}
 --- !u!114 &4346560432772395278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,6 +928,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoundWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 7578528290573335375, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83529f8efcd8045898cf7f7455d0839c, type: 3}
 --- !u!4 &4668309262394937388 stripped
@@ -945,6 +949,10 @@ PrefabInstance:
     - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_Name
       value: AutoTargetWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563062905047357366, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8980460198938748781, guid: df8b15a1b844245e2bb9d975354ee3d2, type: 3}
       propertyPath: m_RootOrder

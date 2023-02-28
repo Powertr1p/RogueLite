@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _experienceDatas:
   - Level: 1
-    Experience: 5000
-  - Level: 1
-    Experience: 5000
-  - Level: 1
-    Experience: 5000
-  - Level: 1
-    Experience: 5000
+    Experience: 100
+  - Level: 2
+    Experience: 400
+  - Level: 3
+    Experience: 500
+  - Level: 4
+    Experience: 700
