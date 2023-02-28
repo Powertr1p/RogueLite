@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6498476576083524809}
   - component: {fileID: 1674166795}
   m_Layer: 10
-  m_Name: PickableWeapon
+  m_Name: PickableWeapon_Round
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
