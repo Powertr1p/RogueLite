@@ -5080,7 +5080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyFactory: {fileID: 1772788589}
-  _limit: 10
+  _limit: 50
   _prefab: {fileID: -8017415832571507734, guid: a0e44419bbb7649509da1c04e0ada3df, type: 3}
 --- !u!4 &844283154
 Transform:
