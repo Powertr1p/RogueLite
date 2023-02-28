@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using DG.Tweening;
 using UnityEngine;
 
 namespace PowerTrip
@@ -11,9 +9,10 @@ namespace PowerTrip
         [SerializeField] private EnemyFactory _enemyFactory;
         
         [SerializeField] private int _limit = 50;
-        [SerializeField] private Queue<BloodAnimation> _pool = new Queue<BloodAnimation>();
         [SerializeField] private BloodAnimation _prefab;
 
+        private Queue<BloodAnimation> _pool = new Queue<BloodAnimation>();
+        
         private void OnEnable()
         {
             _enemyFactory.EnemyCreated += OnEnemyCreated;
@@ -66,15 +65,6 @@ namespace PowerTrip
         {
             instance.Deactivation(instance.Activate);
             instance.transform.position = targetPosition;
-        }
-
-        private void DisableObject(Transform instance)
-        {
-            var instanceTransform = instance.transform;
-
-            instanceTransform.DOScale(Vector3.zero, 0.15f);
-            
-            instanceTransform.gameObject.SetActive(false);
         }
 
         private void EnableObject(BloodAnimation instance, Vector3 targetPosition)
