@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PowerTrip
 {
@@ -10,6 +12,8 @@ namespace PowerTrip
         [SerializeField] private List<EnemyBase> _enemyPrefabs;
         [SerializeField] private LootFactory _lootFactory;
         [SerializeField] private BloodPool _bloodPool;
+
+        public Action<EnemyBase> EnemyCreated;
 
         public EnemyBase GetEnemy(EnemyType type, Player player)
         {
@@ -23,6 +27,8 @@ namespace PowerTrip
             {
                 instance.Initialize(player);
             }
+            
+            EnemyCreated?.Invoke(instance);
 
             return instance;
         }
