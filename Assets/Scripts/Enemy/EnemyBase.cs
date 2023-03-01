@@ -95,6 +95,7 @@ namespace PowerTrip
 
             if (_lootTransform != null)
             {
+                _lootTransform.rotation = Quaternion.identity;
                 _lootTransform.SetParent(null);
                 _lootTransform.gameObject.SetActive(true);
             }

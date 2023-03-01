@@ -11,7 +11,6 @@ namespace PowerTrip
     {
         [SerializeField] private List<EnemyBase> _enemyPrefabs;
         [SerializeField] private LootFactory _lootFactory;
-        [SerializeField] private BloodPool _bloodPool;
 
         public Action<EnemyBase> EnemyCreated;
 

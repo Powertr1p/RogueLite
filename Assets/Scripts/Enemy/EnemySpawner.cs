@@ -94,7 +94,7 @@ namespace PowerTrip
             for (int i = 0; i < spawnAmount; i++)
             {
                 Vector2 spawnPosition = GenerateSpawnPosition();
-                var instance = _factory.GetEnemy(EnemyType.SimpleEnemy, _player);
+                var instance = _factory.GetEnemy(GetRandomEnemy(), _player);
                 instance.transform.position = spawnPosition;
 
                 CountEnemy(instance);
@@ -176,6 +176,11 @@ namespace PowerTrip
             enemy.OnDeath -= StopCountEnemy;
             
             _activeEnemies.Remove(enemy);
+        }
+
+        private EnemyType GetRandomEnemy()
+        {
+            return (EnemyType)Random.Range(0, Enum.GetValues(typeof(EnemyType)).Length);
         }
     }
 }
