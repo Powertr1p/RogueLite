@@ -12,7 +12,7 @@ namespace PowerTrip
         [SerializeField] private List<EnemyBase> _enemyPrefabs;
         [SerializeField] private LootFactory _lootFactory;
 
-        public Action<EnemyBase> EnemyCreated;
+        public event Action<EnemyBase> EnemyCreated;
 
         public EnemyBase GetEnemy(EnemyType type, Player player)
         {

@@ -1,3 +1,4 @@
+using System;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace PowerTrip
         [SerializeField] private Image _uiImage;
         [SerializeField] private TextMeshProUGUI _levelText;
 
+        public event Action LevelUp;
+        
         private float _currentExp = 0f;
         private int _currentLevel = 1;
         private float _targetExpToLevelUp;
@@ -68,6 +71,8 @@ namespace PowerTrip
                 _currentLevel++;
                 _currentData = GetCurrentExperienceData();
                 _uiImage.fillAmount = 0;
+                
+                LevelUp?.Invoke();
             }
 
             _levelText.text = _currentLevel.ToString();
