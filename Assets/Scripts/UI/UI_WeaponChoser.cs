@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,11 +7,16 @@ namespace PowerTrip
     public class UI_WeaponChoser : MonoBehaviour
     {
         [SerializeField] private ExperienceGainer _experience;
-        
+
         [SerializeField] private Button _buttonLeft;
         [SerializeField] private Button _buttonCenter;
         [SerializeField] private Button _buttonRight;
         [SerializeField] private GameObject _container;
+        
+        //TODO: сделать контроллер баттонов
+        //TODO: создавать их
+        //TODO: у каждой кнопки свой обработчик со своим ивентом
+        //TODO: отдавать в ивенте дату баттона с оружием
         
         private void OnEnable()
         {
