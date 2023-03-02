@@ -6,6 +6,7 @@ namespace PowerTrip
     {
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private EnemyMover _mover;
+        [SerializeField] private float _rotationSpeed = 5f;
 
         private readonly float _maxAngle = 90f;
         
@@ -25,7 +26,7 @@ namespace PowerTrip
             
             _sprite.flipY = direction.normalized.x < 0 || direction.normalized.x > 0 && angle > _maxAngle;
             
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
     }
 }

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using PowerTrip.WeaponChoser;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PowerTrip
 {
@@ -15,12 +13,7 @@ namespace PowerTrip
         private List<WeaponChoserSlot> _slots = new();
 
         private readonly int _maxSlots = 3;
-        
-        //TODO: сделать контроллер баттонов
-        //TODO: создавать их
-        //TODO: у каждой кнопки свой обработчик со своим ивентом
-        //TODO: отдавать в ивенте дату баттона с оружием
-        
+
         private void OnEnable()
         {
             _experience.LevelUp += Show;
