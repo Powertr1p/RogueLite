@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using PowerTrip.WeaponChoser;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +9,12 @@ namespace PowerTrip
     public class UI_WeaponChoser : MonoBehaviour
     {
         [SerializeField] private ExperienceGainer _experience;
+        [SerializeField] private Transform _container;
+        [SerializeField] private WeaponChoserSlot _slotPrefab;
 
-        [SerializeField] private Button _buttonLeft;
-        [SerializeField] private Button _buttonCenter;
-        [SerializeField] private Button _buttonRight;
-        [SerializeField] private GameObject _container;
+        private List<WeaponChoserSlot> _slots = new();
+
+        private readonly int _maxSlots = 3;
         
         //TODO: сделать контроллер баттонов
         //TODO: создавать их
@@ -20,20 +23,28 @@ namespace PowerTrip
         
         private void OnEnable()
         {
-            _buttonLeft.onClick.AddListener(OnLeftButtonClick);
-            _buttonCenter.onClick.AddListener(OnCenterButtonClick);
-            _buttonRight.onClick.AddListener(OnRightButtonClick);
-
             _experience.LevelUp += Show;
         }
 
         private void OnDisable()
         {
-            _buttonLeft.onClick.RemoveListener(OnLeftButtonClick);
-            _buttonRight.onClick.RemoveListener(OnCenterButtonClick);
-            _buttonCenter.onClick.RemoveListener(OnRightButtonClick);
-            
             _experience.LevelUp -= Show;
+
+            for (int i = 0; i < _slots.Count; i++)
+                _slots[i].ButtonClicked -= GiveWeapon;
+        }
+
+        private void Awake()
+        {
+            for (int i = 0; i < _maxSlots; i++)
+            {
+                var instance = Instantiate(_slotPrefab, _container);
+                _slots.Add(instance);
+                
+                instance.ButtonClicked += GiveWeapon;
+            }
+            
+            _container.gameObject.SetActive(false);
         }
 
         private void Show()
@@ -42,21 +53,8 @@ namespace PowerTrip
             _container.gameObject.SetActive(true);
         }
 
-        private void OnLeftButtonClick()
+        private void GiveWeapon()
         {
-            Debug.Log("clicked 1");
-            CloseWindow();
-        }
-
-        private void OnCenterButtonClick()
-        {
-            Debug.Log("clicked 2");
-            CloseWindow();
-        }
-        
-        private void OnRightButtonClick()
-        {
-            Debug.Log("clicked 3");
             CloseWindow();
         }
 
