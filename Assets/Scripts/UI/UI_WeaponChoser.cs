@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PowerTrip.WeaponChoser;
+using Storages;
 using UnityEngine;
 
 namespace PowerTrip
@@ -7,6 +8,7 @@ namespace PowerTrip
     public class UI_WeaponChoser : MonoBehaviour
     {
         [SerializeField] private ExperienceGainer _experience;
+        [SerializeField] private LevelWeaponStorage _storage;
         [SerializeField] private Transform _container;
         [SerializeField] private WeaponChoserSlot _slotPrefab;
 
@@ -43,7 +45,20 @@ namespace PowerTrip
         private void Show()
         {
             Time.timeScale = 0;
+            
+            SetWeaponData();
+            
             _container.gameObject.SetActive(true);
+        }
+
+        private void SetWeaponData()
+        {
+            var dataToSet = _storage.GetThreeWeapons();
+
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                _slots[i].SetWeaponData(dataToSet[i]);
+            }
         }
 
         private void GiveWeapon()
