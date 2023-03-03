@@ -4,5 +4,6 @@ namespace PowerTrip
     {
         SimpleEnemy,
         EyeEnemy,
+        DemonEnemy,
     }
 }
