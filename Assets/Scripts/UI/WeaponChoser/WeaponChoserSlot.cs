@@ -3,14 +3,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PowerTrip.WeaponChoser
+namespace PowerTrip
 {
     public class WeaponChoserSlot : MonoBehaviour
     {
         [SerializeField] private Button _button;
         [SerializeField] private TextMeshProUGUI _title;
 
-        public event Action ButtonClicked;
+        private Weapon _currentWeapon;
+        
+        public event Action<Weapon> ButtonClicked;
 
         private void OnEnable()
         {
@@ -24,12 +26,18 @@ namespace PowerTrip.WeaponChoser
 
         public void SetWeaponData(Weapon weapon)
         {
+            _currentWeapon = weapon;
             _title.text = weapon.gameObject.name;
+        }
+
+        public void ResetWeaponData()
+        {
+            _currentWeapon = null;
         }
 
         private void OnButtonClicked()
         {
-            ButtonClicked?.Invoke();
+            ButtonClicked?.Invoke(_currentWeapon);
         }
     }
 }

@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6129110928698153207}
   - component: {fileID: 6426112486966320878}
+  - component: {fileID: 2951958986532803298}
   m_Layer: 6
   m_Name: SimpleProjectile
   m_TagString: Untagged
@@ -132,3 +133,19 @@ MonoBehaviour:
   _visual: {fileID: 5807984862659780108}
   _hasHitEffect: 0
   _deathEffect: {fileID: 0}
+--- !u!58 &2951958986532803298
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6129110928698153205}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.12

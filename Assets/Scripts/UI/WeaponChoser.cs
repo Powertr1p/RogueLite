@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using PowerTrip.WeaponChoser;
 using Storages;
 using UnityEngine;
 
 namespace PowerTrip
 {
-    public class UI_WeaponChoser : MonoBehaviour
+    public class WeaponChoser : MonoBehaviour
     {
         [SerializeField] private ExperienceGainer _experience;
+        [SerializeField] private PlayerWeaponInventory _invenotry;
         [SerializeField] private LevelWeaponStorage _storage;
         [SerializeField] private Transform _container;
         [SerializeField] private WeaponChoserSlot _slotPrefab;
@@ -61,15 +61,25 @@ namespace PowerTrip
             }
         }
 
-        private void GiveWeapon()
+        private void GiveWeapon(Weapon weapon)
         {
+            _invenotry.AddWeapon(weapon);
+            
             CloseWindow();
         }
 
         private void CloseWindow()
         {
+            ResetSlotsWeaponData();
+
             _container.gameObject.SetActive(false);
             Time.timeScale = 1;
+        }
+
+        private void ResetSlotsWeaponData()
+        {
+            for (int i = 0; i < _slots.Count; i++)
+                _slots[i].ResetWeaponData();
         }
     }
 }
