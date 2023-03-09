@@ -7,14 +7,14 @@ namespace PowerTrip
         #region Fields
         [SerializeField] private float _speed = 2f;
 
-        private Transform _t;
+        private Transform _transform;
 
         private bool _isEnabled = false;
         #endregion
 
         private void Awake()
         {
-            _t = transform;
+            _transform = transform;
         }
 
         public void SetState(bool state)
@@ -28,7 +28,7 @@ namespace PowerTrip
 
             Vector3 movement = new Vector3(input.x, input.y, 0f).normalized;
 
-            _t.Translate(movement * (_speed * Time.deltaTime));
+            _transform.Translate(movement * (_speed * Time.deltaTime));
         }
     }
 }

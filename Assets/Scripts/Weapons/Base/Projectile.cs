@@ -8,9 +8,9 @@ namespace PowerTrip
         [SerializeField] private bool _hasHitEffect = false;
         [SerializeField] private GameObject _deathEffect;
         
-        private Vector3 _direction;
-        private float _speed;
-        private float _damage;
+        protected Vector3 Direction;
+        protected float Speed;
+        protected float Damage;
 
         private int _maxNumberOfCollisions = 1;
         private int _currentNumberOfCollisions;
@@ -22,7 +22,7 @@ namespace PowerTrip
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.TryGetComponent(out IDamageable damageable))
-                DealDamage(damageable, _damage);
+                DealDamage(damageable, Damage);
         }
 
         private void OnBecameInvisible()
@@ -30,18 +30,18 @@ namespace PowerTrip
             Destroy(gameObject);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (!_isInitialized) return;
             
-            transform.Translate(_direction * (_speed * Time.deltaTime));
+            transform.Translate(Direction * (Speed * Time.deltaTime));
         }
 
-        public void Init(Vector3 direction, float speed, float damage)
+        public virtual void Init(Vector3 direction, float speed, float damage)
         {
-            _direction = direction;
-            _speed = speed;
-            _damage = damage;
+            Direction = direction;
+            Speed = speed;
+            Damage = damage;
 
             RotateToDirection();
             
@@ -55,7 +55,7 @@ namespace PowerTrip
 
             _currentNumberOfCollisions++;
 
-            damageable.GetDamage(_damage);
+            damageable.GetDamage(Damage);
 
             if (_currentNumberOfCollisions >= _maxNumberOfCollisions)
             {
@@ -69,9 +69,9 @@ namespace PowerTrip
 
         private void RotateToDirection()
         {
-            if (_direction != Vector3.zero)
+            if (Direction != Vector3.zero)
             {
-                float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+                float angle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
                 _visual.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
