@@ -6,10 +6,16 @@ namespace Weapons.CircleFloatingWeapon
 {
     public class CircleFloatingProjectile : Projectile
     {
-        public float radius = 1f;
-        private float angle; 
+        private float _radius = 1f;
+        private float _angle; 
         
         private Transform _playerTransform;
+        private Transform _transform;
+
+        private void Awake()
+        {
+            _transform = transform;
+        }
 
         public override void Init(Vector3 direction, float speed, float damage)
         {
@@ -17,19 +23,23 @@ namespace Weapons.CircleFloatingWeapon
             Damage = damage;
         }
 
-        public void SetPlayerTransform(Transform player)
+        public void SetDependecies(Transform player, float radius)
         {
             _playerTransform = player;
+            _radius = radius;
+
+            IsInitialized = true;
         }
 
-        protected override void  Update()
+        protected override void Update()
         {
-            angle += Speed * Time.deltaTime;
-
-            // calculate the position of the projectile based on the angle and radius
-            float x = _playerTransform.position.x + Mathf.Cos(angle) * radius;
-            float y = _playerTransform.position.y + Mathf.Sin(angle) * radius;
-            transform.position = new Vector2(x, y);
+            if (!IsInitialized) return;
+            
+            _angle += Speed * Time.deltaTime;
+            
+            float x = _playerTransform.position.x + Mathf.Cos(_angle) * _radius;
+            float y = _playerTransform.position.y + Mathf.Sin(_angle) * _radius;
+            _transform.position = new Vector2(x, y);
         }
     }
 }

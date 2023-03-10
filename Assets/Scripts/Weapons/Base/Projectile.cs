@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace PowerTrip
@@ -7,6 +8,8 @@ namespace PowerTrip
         [SerializeField] private Transform _visual;
         [SerializeField] private bool _hasHitEffect = false;
         [SerializeField] private GameObject _deathEffect;
+
+        public event Action<Projectile> Destoryed;
         
         protected Vector3 Direction;
         protected float Speed;
@@ -16,8 +19,7 @@ namespace PowerTrip
         private int _currentNumberOfCollisions;
         private float _destroyTimer = 0;
 
-        private bool _isInitialized;
-        
+        protected bool IsInitialized;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -32,9 +34,14 @@ namespace PowerTrip
 
         protected virtual void Update()
         {
-            if (!_isInitialized) return;
+            if (!IsInitialized) return;
             
             transform.Translate(Direction * (Speed * Time.deltaTime));
+        }
+
+        protected void OnDestroy()
+        {
+            Destoryed?.Invoke(this);
         }
 
         public virtual void Init(Vector3 direction, float speed, float damage)
@@ -45,7 +52,7 @@ namespace PowerTrip
 
             RotateToDirection();
             
-            _isInitialized = true;
+            IsInitialized = true;
             Destroy(gameObject, 5f);
         }
 
@@ -63,7 +70,7 @@ namespace PowerTrip
                 PlayHitEffect();
                 Destroy(gameObject, _destroyTimer);
                 
-                _isInitialized = false;
+                IsInitialized = false;
             }
         }
 
